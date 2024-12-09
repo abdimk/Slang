@@ -10,16 +10,85 @@ from slang.exceptions import(
     DuckChatException,
     RatelimitException
 )
-# To do 
 
-# Historical Analysis 
-# 
-
-
-
+import asyncio
+import gzip
+import zlib
+import brotli
+import chardet
 from slang.models import model_type,models
 
 Generative_Models = model_type.ModelType
+
+
+"""
+To do 
+
+
+Historical Data Analysis
+Term selection
+quick recap
+"""
+
+class AskChat:
+    def __init__(self, query: str):
+        self.url = "https://www.teach-anything.com/api/generate"
+        self.query = query
+        self.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
+        self.payload = {
+            "prompt": f"{self.query}\nYou are ChatGPT, a large language model trained by OpenAI.\n"
+                      "Knowledge cutoff: 2024-10\n"
+                      "Current model: gpt-4o\n"
+                      "Current time: Sat Dec 07 2024 13:58:28 GMT+0300 (East Africa Time)\n"
+                      "Latex inline: \\(x^2\\)\n"
+                      "Latex block: $$e=mc^2$$\n"
+        }
+
+        self.headers = {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Content-Type": "application/json",
+            "Origin": "https://www.teach-anything.com",
+            "Referer": "https://www.teach-anything.com/",
+            "User-Agent": self.user_agent,
+        }
+
+    async def get_answer(self) -> str:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.url, headers=self.headers, json=self.payload) as response:
+                if response.status == 200:
+                    encoding = response.headers.get('Content-Encoding', '').lower()
+                    response_data = await response.read()
+
+                    # Handle compression
+                    if 'gzip' in encoding:
+                        response_data = gzip.decompress(response_data)
+                    elif 'deflate' in encoding:
+                        response_data = zlib.decompress(response_data)
+                    elif 'br' in encoding:
+                        response_data = brotli.decompress(response_data)
+
+                    # Detect encoding and decode response
+                    detected = chardet.detect(response_data)
+                    detected_encoding = detected.get('encoding', 'utf-8')  # Use 'utf-8' as default if unknown
+                    try:
+                        response_body = response_data.decode(detected_encoding)
+                    except (UnicodeDecodeError, LookupError):
+                        # Fallback to Latin-1 if decoding fails
+                        response_body = response_data.decode('latin1')
+
+                    return response_body
+                else:
+                    return f"Request failed with status {response.status}"
+
+    # # Standalone function for testing
+    # async def send_request():
+    #     question = "What is your name?"
+    #     chat_instance = AskChat(query=question)
+    #     response = await chat_instance.get_answer()
+    #     return f"Response:, {response}"
 
 
 class DuckChat:
