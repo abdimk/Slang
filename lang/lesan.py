@@ -49,5 +49,5 @@ class Lesan:
 
 
 
-q1 = Lesan("do you love animals")
-print(q1.translate("am"))
+# q1 = Lesan("do you love animals")
+# print(q1.translate("am"))

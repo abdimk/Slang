@@ -1,6 +1,6 @@
 from types import TracebackType
 from typing import AsyncGenerator, Self
-
+from datetime import datetime
 import aiohttp
 import msgspec
 from fake_useragent import UserAgent
@@ -16,6 +16,7 @@ import gzip
 import zlib
 import brotli
 import chardet
+import json
 from slang.models import model_type,models
 
 Generative_Models = model_type.ModelType
@@ -30,19 +31,104 @@ Term selection
 quick recap
 """
 
+class NextChat:
+    def __init__(self,text:str, time=datetime.now())->None:
+
+        self.url = "https://gpt24-ecru.vercel.app/api/openai/v1/chat/completions"
+        self.headers = {
+            "accept": "application/json, text/event-stream",
+            "content-type": "application/json",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        }
+
+        self.query = text
+
+        # default shit [don't mess with this]
+        self.stream = True
+        self.model = Generative_Models.GPT4o_Mini.value
+        self.temperature = 0.5
+        self.presence_penalty = 0
+        self.frequency_penalty = 0
+        self.top_p = 1
+        self.max_tokens = 4000
+
+        self.payload = {
+            "messages": [
+                {"role": "system", 
+                "content": "You are ChatGPT, a large language model trained by OpenAI.\n"
+                                            "Knowledge cutoff: 2024-10\n"
+                                            "Current model: gpt-4o\n"
+                                            f"Current time: {time}\n"
+                                            "Latex inline: \\(x^2\\)\n"
+                                            "Latex block: $$e=mc^2$$\n"},
+                {"role": "user", 
+                "content": f"{self.query}"}
+            ],
+            "stream": self.stream,
+            "model": self.model,
+            "temperature": self.temperature,
+            "presence_penalty": self.presence_penalty,
+            "frequency_penalty": self.frequency_penalty,
+            "top_p": self.top_p,
+            "max_tokens": self.max_tokens
+        }
+
+
+    def __concatenate_content(self,response_text):
+        """
+        Extracts and concatenates the 'content' filed from a stream of JSON-like data.
+
+
+        Args:
+            reponse_text (str): The raw streamed response.
+
+        Returns:
+            str: The concatenated content.
+        """
+
+        content = []
+
+        for line in response_text.splitlines():
+            if line.startswith("data: ") and line != "data: [DONE]":
+                try:
+                    data = json.loads(line[6:])  # Extract JSON part after 'data: '
+                    delta_content = data.get("choices", [{}])[0].get("delta", {}).get("content", "")
+                    if delta_content:  # Only add non-empty content
+                        content.append(delta_content)
+                except (json.JSONDecodeError, IndexError) as e:
+                    return f"Error parsing line: {line} | Error: {e}"
+                
+        return ''.join(content)
+    
+    async def fetch_chat(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.url, headers=self.headers, json=self.payload) as response:
+                #return f"Status: {response.status}\n"
+                if response.status == 200:
+                    response_text = ""
+                    async for line in response.content:
+                        decoded_line = line.decode('utf-8').strip()
+                        response_text += decoded_line + "\n"
+
+                final_content = self.__concatenate_content(response_text)
+                return f"{final_content}"
+
+
+
 class AskChat:
     def __init__(self, query: str):
         self.url = "https://www.teach-anything.com/api/generate"
         self.query = query
         self.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-
+        self.now = datetime.now()
         self.payload = {
-            "prompt": f"{self.query}\nYou are ChatGPT, a large language model trained by OpenAI.\n"
+            "prompt": f"{self.query}\nYou are pretrained transformers by OpenAI\n"
                       "Knowledge cutoff: 2024-10\n"
                       "Current model: gpt-4o\n"
-                      "Current time: Sat Dec 07 2024 13:58:28 GMT+0300 (East Africa Time)\n"
+                      f"Current time: {self.now}\n"
                       "Latex inline: \\(x^2\\)\n"
                       "Latex block: $$e=mc^2$$\n"
+                      
         }
 
         self.headers = {
@@ -82,14 +168,6 @@ class AskChat:
                     return response_body
                 else:
                     return f"Request failed with status {response.status}"
-
-    # # Standalone function for testing
-    # async def send_request():
-    #     question = "What is your name?"
-    #     chat_instance = AskChat(query=question)
-    #     response = await chat_instance.get_answer()
-    #     return f"Response:, {response}"
-
 
 class DuckChat:
     def __init__(self,model: model_type.ModelType = Generative_Models.GPT4o_Full,
