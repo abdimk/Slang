@@ -10,15 +10,7 @@
 
 
 
-## create a virtual python enviroment
+### Create a virtual python enviroment
 ```bash
-python3 -venv myenv
-```
-### activate it
-```bash
-source myenv/bin/activate
-```
-### install the requirments
-```bash
-pip install -r requirments.txt
+python3 -venv myenv && source myenv/bin/activate && pip install -r requirments.txt
 ```
