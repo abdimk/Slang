@@ -7,3 +7,18 @@
 
 ## About
 <p>Slng alows you to send and customize your LLM form terminal [No Tokens Required]</p>
+
+
+
+## create a virtual python enviroment
+```bash
+python3 -venv myenv
+```
+### activate it
+```bash
+source myenv/bin/activate
+```
+### install the requirments
+```bash
+pip install -r requirments.txt
+```
