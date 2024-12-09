@@ -19,7 +19,7 @@ import chardet
 import json
 from slang.models import model_type,models
 
-Generative_Models = model_type.ModelType
+Generative_Models = model_type.DuckModelType
 
 
 """
@@ -170,7 +170,7 @@ class AskChat:
                     return f"Request failed with status {response.status}"
 
 class DuckChat:
-    def __init__(self,model: model_type.ModelType = Generative_Models.GPT4o_Full,
+    def __init__(self,model:Generative_Models,
                  session:aiohttp.ClientSession | None = None,
                  user_agent: UserAgent | str = UserAgent(min_version=120.0)) -> None:
         if type(user_agent) is str:
@@ -366,5 +366,34 @@ class DuckChat:
 
         self.history.add_answer("".join(message_list))
 
+
+#GPT 3 last update 2021
+
+class Chatx:
+    def __init__(self, text) -> None:
+        self.query = text
+        self.url = "https://www.pizzagpt.it/api/chatx-completion"
+        self.headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'Origin': 'https://www.pizzagpt.it',
+            'Referer': 'https://www.pizzagpt.it/en',
+            'x-secret': 'Marinara'
+        }
+
+        self.payload = {
+            'question': f'{self.query}'
+        }
+
+
+    async def fetch_chat(self) ->str:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.url, headers=self.headers, data=json.dumps(self.payload)) as response:
+                if response.status == 200:
+                    response_data = await response.json()
+                    return f'Response:, {response_data['content']}'
+                else:
+                    return f'Error: {response.status}'
 
 

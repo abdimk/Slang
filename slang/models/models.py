@@ -2,7 +2,7 @@ from enum import Enum
 
 import msgspec
 
-from .model_type import ModelType
+from .model_type import DuckModelType
 
 
 class Role(Enum):
@@ -16,7 +16,7 @@ class Message(msgspec.Struct):
 
 
 class History(msgspec.Struct):
-    model: ModelType
+    model: DuckModelType
     messages: list[Message]
 
     def add_input(self, message: str) -> None:
