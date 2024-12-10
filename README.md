@@ -1,5 +1,5 @@
 <div>
-    <h1 align="center"> Slang</h1>
+    <h1 align="center"> Slang</h1> <img src="Slang/slang/assets/elmo-logo.png" width="70px" height="70px">
 </div>
 
 <p align="center"><em>A simple LLM Wrapper and Transformer CLI</em></p>
