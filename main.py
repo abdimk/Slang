@@ -38,25 +38,27 @@ Custom_query = {
     "transformerModels":""
 }
 
-query = input("Your question:")
-async def main(question: str = "") -> str:
-    async with DuckChat(M.Mixtral) as d1:
-        response = await d1.ask_question(question)
-        response = remove_markdown_formatting(response)
-        await typeeffect(response,0.02)
+# query = input("Your question:")
+# async def main(question: str = "") -> str:
+#     async with DuckChat(M.GPT4o_Mini) as d1:
+#         response = await d1.ask_question(question)
+#         response = remove_markdown_formatting(response)
+#         await typeeffect(response,0.02)
 
+
+#AskChat
 # query = input("Your question:")
 # async def main(query:str)->str:
 #     chat_instance = AskChat(query)
 #     answer = await chat_instance.get_answer()
-#     print(answer)
-    
-# query = input("Your question:")
-# async def main(query: str)->str:
-#     chat_instance = NextChat(query)
-#     answer = await chat_instance.fetch_chat()
-#     #translated = Lesan(answer).translate("am")
 #     await typeeffect(answer, 0.02)
+    
+query = input("Your question:")
+async def main(query: str)->str:
+    chat_instance = NextChat(query)
+    answer = await chat_instance.fetch_chat()
+    #translated = Lesan(answer).translate("am")
+    await typeeffect(answer, 0.02)
 
 
 #Chat X
