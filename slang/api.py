@@ -1,22 +1,19 @@
-from types import TracebackType
-from typing import AsyncGenerator, Self
-from datetime import datetime
-import aiohttp
-import msgspec
-from fake_useragent import UserAgent
-## Import the exceptions
-from slang.exceptions import(
-    ConversationLimitException,
-    DuckChatException,
-    RatelimitException
-)
-
 import asyncio
 import gzip
 import zlib
 import brotli
 import chardet
 import json
+import aiohttp
+import msgspec
+from types import TracebackType
+from typing import AsyncGenerator, Self
+from datetime import datetime
+from fake_useragent import UserAgent
+from slang.exceptions import (ConversationLimitException,
+                              DuckChatException,
+                              RatelimitException)
+
 from slang.models import model_type,models
 
 Generative_Models = model_type.DuckModelType
@@ -32,8 +29,9 @@ quick recap
 """
 
 class NextChat:
-    def __init__(self,text:str, time=datetime.now())->None:
+    def __init__(self,text:str, time=datetime.now(),user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:
 
+        self.user_agent = user_agent if type(user_agent) is str else UserAgent.random
         self.url = "https://gpt24-ecru.vercel.app/api/openai/v1/chat/completions"
         self.headers = {
             "accept": "application/json, text/event-stream",
@@ -78,7 +76,6 @@ class NextChat:
         """
         Extracts and concatenates the 'content' filed from a stream of JSON-like data.
 
-
         Args:
             reponse_text (str): The raw streamed response.
 
@@ -122,7 +119,7 @@ class AskChat:
         self.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
         self.now = datetime.now()
         self.payload = {
-            "prompt": f"{self.query}\nYou are pretrained transformers by OpenAI\n"
+            "prompt": f"Pretend you are GPT-4 model. Explain {self.query} English with a simple example.\n"
                       "Knowledge cutoff: 2024-10\n"
                       "Current model: gpt-4o\n"
                       f"Current time: {self.now}\n"
@@ -148,7 +145,7 @@ class AskChat:
                     encoding = response.headers.get('Content-Encoding', '').lower()
                     response_data = await response.read()
 
-                    # Handle compression
+                    
                     if 'gzip' in encoding:
                         response_data = gzip.decompress(response_data)
                     elif 'deflate' in encoding:
@@ -156,13 +153,13 @@ class AskChat:
                     elif 'br' in encoding:
                         response_data = brotli.decompress(response_data)
 
-                    # Detect encoding and decode response
+                    
                     detected = chardet.detect(response_data)
                     detected_encoding = detected.get('encoding', 'utf-8')  # Use 'utf-8' as default if unknown
                     try:
                         response_body = response_data.decode(detected_encoding)
                     except (UnicodeDecodeError, LookupError):
-                        # Fallback to Latin-1 if decoding fails
+                        
                         response_body = response_data.decode('latin1')
 
                     return response_body
