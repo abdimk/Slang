@@ -2,7 +2,7 @@
     <h1 align="center"> Slang</h1>
 </div>
 
-<p align="center"><em>A simple LLM and Transformer CLI</em></p>
+<p align="center"><em>A simple LLM Wrapper and Transformer CLI</em></p>
 <!-- <p align="center"> </p> -->
 
 ## About
