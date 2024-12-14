@@ -1,10 +1,14 @@
 import aiohttp
 import asyncio
-from config.blackbox_config import BLACKBOX_HEADERS, get_blackbox_payload
-from config.blackbox_config import get_claude_headers,get_claude_payload
 import aiohttp
 import asyncio
 import json
+from slang.config.blackbox_config import(
+    BLACKBOX_HEADERS,
+    get_blackbox_payload,
+    get_claude_headers,get_claude_payload
+)
+
 
 class BlackboxAI:
     def __init__(self, query: str):

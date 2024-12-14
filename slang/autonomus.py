@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 import json
 import base64
+import logging
 
 class Llama:
     def __init__(self, query: str):
@@ -94,12 +95,6 @@ class Llama:
             return full_response
 
 
-
-import aiohttp
-import asyncio
-import json
-import base64
-import logging
 
 # Configure logging
 logging.basicConfig(level=logging.ERROR)

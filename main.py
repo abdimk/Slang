@@ -6,8 +6,7 @@ from slang.api import DuckChat,model_type
 from slang.api import AskChat,Chatx,NextChat,Morphic
 from lang.lesan import Lesan
 from slang.api import Llama,QwenCoder
-
-
+from slang.api import ClaudeAI
 
 M = model_type.DuckModelType
 
@@ -39,15 +38,21 @@ Custom_query = {
 }
 
 
-#Llama 405B parameters 
+# #Llama 405B parameters 
 async def main():
-    async with QwenCoder("write a simple hello world in go") as l1:
+    async with ClaudeAI("write a simple unit test for python") as l1:
         response = await l1.get_response()
         await typeeffect(response,0.03)
 
 
 
 
+
+# #Llama QewnCoder parameters 
+# async def main():
+#     async with QwenCoder("write a simple hello world in go") as l1:
+#         response = await l1.get_response()
+#         await typeeffect(response,0.03)
 
 
 # #Llama 405B parameters 

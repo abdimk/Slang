@@ -21,6 +21,7 @@ Generative_Models = model_type.DuckModelType
 
 ##llama from balckbox ai
 from slang.autonomus import Llama,QwenCoder
+from slang.blackbox import ClaudeAI,BlackboxAI
 
 """
 To do 
