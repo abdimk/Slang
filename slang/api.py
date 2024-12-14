@@ -19,6 +19,9 @@ from slang.models import model_type,models
 Generative_Models = model_type.DuckModelType
 
 
+##llama from balckbox ai
+from slang.autonomus import Llama,QwenCoder
+
 """
 To do 
 

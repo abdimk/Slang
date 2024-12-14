@@ -3,11 +3,10 @@ import sys
 import re 
 
 from slang.api import DuckChat,model_type
-from slang.api import AskChat
-from slang.api import NextChat
+from slang.api import AskChat,Chatx,NextChat,Morphic
 from lang.lesan import Lesan
-from slang.api import Chatx
-from slang.api import Morphic
+from slang.api import Llama,QwenCoder
+
 
 
 M = model_type.DuckModelType
@@ -39,15 +38,31 @@ Custom_query = {
     "transformerModels":""
 }
 
+
+#Llama 405B parameters 
 async def main():
-    async with Morphic("john the repper") as m1:
-        response = await m1.make_request()
+    async with QwenCoder("write a simple hello world in go") as l1:
+        response = await l1.get_response()
         await typeeffect(response,0.03)
 
 
 
 
 
+
+# #Llama 405B parameters 
+# async def main():
+#     async with Llama("john the repper") as l1:
+#         response = await l1.get_response()
+#         await typeeffect(response,0.03)
+
+
+
+
+# async def main():
+#     async with Morphic("john the repper") as m1:
+#         response = await m1.make_request()
+#         await typeeffect(response,0.03)
 
 
 
