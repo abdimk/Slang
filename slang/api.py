@@ -393,4 +393,94 @@ class Chatx:
                 else:
                     return f'Error: {response.status}'
 
+class Morphic:
+    def __init__(self, query: str):
+        self.query = query
+        self.url = "https://www.morphic.sh/api/chat-stream"
+        self.headers = {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Content-Type": "application/json",
+            "Cookie": "copilot:state=false; images:state=false; ph_phc_HK6KqP8mdSmxDjoZtHYi3MW8Kx5mHmlYpmgmZnGuaV5_posthog=%7B%22distinct_id%22%3A%220193be60-3f74-7aab-b7e2-59fd224fd2ed%22%2C%22%24sesid%22%3A%5B1734099588434%2C%220193c062-f1f3-7496-960e-b0a08da05057%22%2C1734099530227%5D%7D",
+            "Origin": "https://www.morphic.sh",
+            "Referer": "https://www.morphic.sh/",
+            "Sec-CH-UA": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+            "Sec-CH-UA-Mobile": "?0",
+            "Sec-CH-UA-Platform": '"Linux"',
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        }
+        self.payload = {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"{self.query}",
+                    "type": "input",
+                    "id": "clkCqnlbfqNTvOna",
+                    "status": "done"
+                }
+            ]
+        }
+        self.session = None
 
+    async def __aenter__(self):
+        # Create the aiohttp client session
+        self.session = aiohttp.ClientSession()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        # Close the aiohttp client session
+        if self.session:
+            await self.session.close()
+
+    def format_response(self, response_text: str) -> dict:
+        response_lines = response_text.strip().split('\n')
+        formatted_output = {
+            'init': None,
+            'search_results': None,
+            'full_response': ''
+        }
+
+        for line in response_lines:
+            try:
+                data = json.loads(line)
+
+                if data.get('type') == 'init':
+                    formatted_output['init'] = data
+
+                if data.get('type') == 'tool' and data.get('name') == 'search':
+                    if data.get('status') == 'done':
+                        formatted_output['search_results'] = data.get('toolInvocation', {}).get('result', {})
+            
+                # Collect response content
+                if data.get('type') == 'answer' and data.get('role') == 'assistant':
+                    if data.get('content'):
+                        formatted_output['full_response'] += data.get('content', '')
+        
+            except json.JSONDecodeError:
+                return f"Error parsing line: {line}"
+            
+        return formatted_output
+
+    async def make_request(self):
+        if not self.session:
+            raise RuntimeError("Client session not initialized. Use async context manager.")
+        
+        async with self.session.post(self.url, json=self.payload, headers=self.headers) as response:
+            if response.status == 200:
+                response_data = await response.text()
+                
+                # Format and print the response
+                formatted_response = self.format_response(response_data)
+                
+                if formatted_response['search_results']:
+                    for result in formatted_response['search_results'].get('results', []):
+                        pass
+                
+                return formatted_response['full_response']
+            
+            else:
+                return f"Request failed with status: {response.status}"

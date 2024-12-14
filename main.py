@@ -7,6 +7,7 @@ from slang.api import AskChat
 from slang.api import NextChat
 from lang.lesan import Lesan
 from slang.api import Chatx
+from slang.api import Morphic
 
 
 M = model_type.DuckModelType
@@ -38,9 +39,21 @@ Custom_query = {
     "transformerModels":""
 }
 
+async def main():
+    async with Morphic("john the repper") as m1:
+        response = await m1.make_request()
+        await typeeffect(response,0.03)
+
+
+
+
+
+
+
+
 # query = input("Your question:")
 # async def main(question: str = "") -> str:
-#     async with DuckChat(M.GPT4o_Mini) as d1:
+#     async with DuckChat(M.Claude) as d1:
 #         response = await d1.ask_question(question)
 #         response = remove_markdown_formatting(response)
 #         await typeeffect(response,0.02)
@@ -53,12 +66,13 @@ Custom_query = {
 #     answer = await chat_instance.get_answer()
 #     await typeeffect(answer, 0.02)
     
-query = input("Your question:")
-async def main(query: str)->str:
-    chat_instance = NextChat(query)
-    answer = await chat_instance.fetch_chat()
-    #translated = Lesan(answer).translate("am")
-    await typeeffect(answer, 0.02)
+#query = input("Your question:")
+#async def main(query: str)->str:
+#    chat_instance = NextChat(query)
+#    answer = await chat_instance.fetch_chat()
+#    #translated = Lesan(answer).translate("am")
+#    await typeeffect(answer, 0.02)
+
 
 
 #Chat X
@@ -73,4 +87,4 @@ async def main(query: str)->str:
     
 
 if __name__ == "__main__":
-    asyncio.run(main(query))
+    asyncio.run(main())
