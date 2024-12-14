@@ -10,7 +10,16 @@
 
 
 
+
+### Clone the github repository
+```bash
+git clone https://github.com/abdimk/Slang
+
+
+```
 ### Create a virtual python enviroment
 ```bash
 python3 -venv myenv && source myenv/bin/activate && pip install -r requirments.txt
 ```
+
+
