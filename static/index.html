@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="slang/assets/elmo-logo.png" type="image/x-icon">
+<title>Slang:Wrapper for LLM and Transformer CLI</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .notecard {
+        max-width: 800px;
+        background-color: #ffffff;
+        padding: 20px 30px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 20px;
+    }
+    h1 {
+        color: #2a3f54;
+        text-align: center; /* Centering the h1 */
+    }
+    h2, h3, h4 {
+        color: #3d556b;
+    }
+    p {
+        text-align: justify; /* Justifying the text in <p> tags */
+        margin: 0; /* Remove default margin */
+        padding: 0 10px; /* Add padding for better spacing */
+    }
+    ul {
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+    li {
+        margin: 5px 0;
+    }
+    code {
+        background-color: #e6e6e6;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 0.95em;
+    }
+    pre {
+        background-color: #f5f7fa;
+        padding: 10px;
+        border-left: 3px solid #2a3f54;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-size: 0.9em;
+    }
+</style>
+</head>
+<body>
+
+<div class="notecard">
+    <a href="https://github.com/abdimk/Slang"><h1>Slang:LLM Wrapper (Beta Stage)</h1></a>
+
+    <p><strong>Slang</strong> :- Slang is a versatile wrapper for popular Large Language Models (LLMs) that simplifies interaction without requiring local library installations. It is designed to work seamlessly with LangChain, enabling developers to modify model parameters effortlessly through its API. Additionally, Slang integrates with various system-level APIs, providing access to the web or any custom corpus of data, making it a powerful tool for building advanced AI-driven applications.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Multi-Model Support</strong>:Offers flexibility to interact with multiple LLMs, making it model-agnostic and adaptable to specific use cases.</li>
+        <li><strong>Integration with Different DataSource</strong>: It gives you ablity to integrate with Hive,VectorDB,GoogleDrive or any form of datasource.</li>
+        <li><strong>LangChain Integration</strong>: Works seamlessly with LangChain, enabling developers to chain LLMs with other tools for more advanced workflows.</li>
+        <li><strong>Parameter Customization</strong>: Easily customize and fine-tune model parameters on the fly without writing complex code.</li>
+        <li><strong>Scalability</strong>: Handles large-scale requests efficiently, making it suitable for production-level deployments.</li>
+    </ul>
+
+    <h2>How It Works</h2>
+    <ol>
+        <li><strong>Users Online NoSignup Models</strong>:Slang provides seamless access to a wide range of online models available on platforms like Blackbox,Hugging Face, allowing users to interact with these models without the need for sign-ups or local installations.</li>
+        <p><li><strong>RAG(Retrieval-augmented generation)</strong>:Slang utilizes RAG to enhance the accuracy of responses by integrating external data sources. By allowing users to connect different custom corpora and datasets, Slang ensures that the model has access to relevant and up-to-date information, significantly reducing hallucinations—instances where the model generates incorrect or fabricated outputs. This approach improves reliability and makes Slang a powerful tool for domain-specific tasks and real-world applications.</li></p>
+    </ol>
+
+    <h2>Requirements</h2>
+    <ul>
+        <li>Python 3.7+</li>
+        <li>No API key required</li>
+    </ul>
+
+    <h2>Test API</h2>
+    <ul>
+        
+        <li>Claude3.5 <strong>endpoints</strong> => /claude</li>
+        <li>Claude3.1 <strong>endpoints</strong> => /claude3</li>
+        <li>GPTmini  <strong>endpoints</strong> => /gptmini</li>
+        <li>Llama3 <strong>endpoints</strong> => /llama3</li>
+        <li>Generate Image[lightroomv1]  <strong>endpoints</strong> => /imagine</li>
+    </ul>
+    <ol>
+        <!-- <li><strong></strong></li>
+        <li><strong></strong> -->
+            <!-- <pre><code>pip install requests google-generativeai</code></pre>
+        </li>
+        <li><strong>API Key Setup</strong><br>The application utilizes two API keys and a search engine ID. The first key is for Gemini - Google's generative AI that is used to make decisions about the items and their placements. The second key is for a custom search engine that is used to search the web for the dimensions of the items. Lastly, the search engine ID is to identify the exact search engine being used in this project (the <code>cx</code> component). To add these keys, create a file called <code>key.txt</code> and paste the three keys in the file with this syntax:
+            <pre><code>&lt;Gemini API Key&gt;
+&lt;Google Custom Search API Key&gt;
+&lt;Search Engine ID&gt;</code></pre>
+        </li>
+    </ol> -->
+
+    <h2>Testing</h2>
+    <p>Feel free to test the models by sending request <code>http://127.0.0.1:8000/claude</code> application with the following command:</p>
+    
+    <pre><code>{"query": "what is your model"}</code></pre>
+
+    <p>Response</p>
+    <pre><code>{"response": "I want to be direct with you. I was developed by Anthropic, but I don't actually know all the specific technical details of my model architecture. I aim to be helpful while being honest about the limits of my knowledge."}</code></pre>
+    
+    
+    <!-- <p>This command should execute the testing script which searches the web for a topic and then feeds that information into Gemini. The language model then parses the information and provides the user with a summary. If this all goes well, then the <code>key.txt</code> file is perfectly initialized.</p>
+
+    <h2>Usage</h2>
+    <p>Once all environmental factors have been properly established and set up, the command to run the main program is</p>
+    <pre><code>python main.py</code></pre>
+    <p>This command will start the program which features a graphical user interface. Users are first prompted to enter the dimensions of their suitcase, and then they can add separate items. The app will scour the web to find the dimensions of these items, so it's best if the user is as specific as possible (e.g., Lenovo IdeaPad Flex 5 instead of Laptop). The application will confirm the dimensions with the user before adding them to the list of items. Once all the items are added, the user is to press the button located towards the right to organize the suitcase. The list of items along with their dimensions are all thoughtfully processed to find the optimum way to place them, as well as an enumeration of detailed instructions on how to do so.</p>  -->
+    <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; color: #777; font-size: 0.9em;">
+    © 2024 Abdimk(Netkas). All rights reserved.
+    </div></div>
+</body>
+</html>

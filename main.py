@@ -38,13 +38,17 @@ Custom_query = {
 }
 
 
-# #Llama 405B parameters 
+# async def main():
+#     async with Morphic("") as l1:
+#         response = await l1.get_response()
+#         await typeeffect(response,0.0001)
+
+
+
 async def main():
-    async with ClaudeAI("write a simple unit test for python") as l1:
+    async with ClaudeAI("what is your model") as l1:
         response = await l1.get_response()
-        await typeeffect(response,0.03)
-
-
+        print(response)
 
 
 
@@ -57,7 +61,7 @@ async def main():
 
 # #Llama 405B parameters 
 # async def main():
-#     async with Llama("john the repper") as l1:
+#     async with Llama("john the ripper") as l1:
 #         response = await l1.get_response()
 #         await typeeffect(response,0.03)
 
@@ -65,7 +69,7 @@ async def main():
 
 
 # async def main():
-#     async with Morphic("john the repper") as m1:
+#     async with Morphic("john the ripper") as m1:
 #         response = await m1.make_request()
 #         await typeeffect(response,0.03)
 
@@ -73,7 +77,7 @@ async def main():
 
 # query = input("Your question:")
 # async def main(question: str = "") -> str:
-#     async with DuckChat(M.Claude) as d1:
+#     async with DuckChat(M.GPT4o_Mini) as d1:
 #         response = await d1.ask_question(question)
 #         response = remove_markdown_formatting(response)
 #         await typeeffect(response,0.02)
