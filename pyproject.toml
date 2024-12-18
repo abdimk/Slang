@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "slang-cli"  # Use a unique name
+version = "0.1.0"
+description = "A CLI app for interacting with AI models"
+authors = ["Abdisa Merga <abdisamk@gmail.com>"]
+readme = "README.md"
+packages = [{include = "slang"}]  # Ensure this matches your package structure
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = "^0.9.0"
+rich = "^13.9.4"
+# Add other dependencies from your requirements
+
+[tool.poetry.scripts]
+slang = "slang.cli:app"  # This enables the 'slang' command
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -70,7 +70,7 @@ class BlackboxAI:
 
 
 class ClaudeAI:
-    def __init__(self, query: str):
+    def __init__(self, query: str,system_prompt:str=None):
         self.query = query
         self.url = 'https://www.blackbox.ai/api/chat'
         self.headers = get_claude_headers()
@@ -85,7 +85,7 @@ class ClaudeAI:
         if self.session:
             await self.session.close()
 
-    async def get_response(self):
+    async def get_response(self,system_prompt:str = None):
         if not self.session:
             raise RuntimeError("Client session not initialized. Use async context manager.")
         
