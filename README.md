@@ -2,7 +2,7 @@
     <h1 align="center"> Slang <img src="slang/assets/elmo-logo.png" width="60px" height="60px"></h1> 
 </div>
 
-<p align="center"><em>A simple LLM Wrapper and Transformer CLI</em></p>
+<p align="center"><em>A simple LLM Wrapper/CLI</em></p>
 <!-- <p align="center"> </p> -->
 
 ## About
