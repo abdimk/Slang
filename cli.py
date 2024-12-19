@@ -11,7 +11,7 @@ from rich.live import Live
 from rich.table import Table
 from rich import box
 
-from slang.api import ClaudeAI
+from slang.api import ClaudeAI,GeminiPro
 from slang.api import QwenCoder,Llama,Morphic
 from slang.api import DuckChat,model_type
 
@@ -252,7 +252,7 @@ def claude(
     async def run_query():
         try:
             with console.status("[bold white] Claude3.5 Sonnet[/bold white]", spinner="dots"):
-                async with ClaudeAI(query) as l1:
+                async with ClaudeAI(query,maxTokens=300) as l1:
                     response = await l1.get_response()
             
             markdown_content = Markdown(response)
@@ -330,6 +330,39 @@ def chat(system_prompt: Optional[str] = typer.Option(None, "-s", "--system", hel
     
     asyncio.run(run_chat())
 
+@app.command()
+def gemini(
+    query: str = typer.Option(..., "-c", "--command", help="The query to send to ClaudeAI")
+) -> None:
+    """
+    Send a query to ClaudeAI and display the response with Markdown formatting.
+    """
+    async def run_query():
+        try:
+            with console.status("[bold white] GeminiPro [/bold white]", spinner="dots"):
+                async with GeminiPro(query,maxTokens=200) as l1:
+                    response = await l1.get_response()
+            
+            markdown_content = Markdown(response)
+            panel = Panel(
+                markdown_content,
+                title="GeminiPro Response",
+                border_style="yellow",
+                expand=True
+            )
+            console.print(panel)
+        
+        except Exception as e:
+            error_panel = Panel(
+                Text(f"Error: {str(e)}", style="bold red"),
+                title="Error",
+                border_style="red",
+                expand=False
+            )
+            console.print(error_panel)
+
+    
+    asyncio.run(run_query())
 
 
 
