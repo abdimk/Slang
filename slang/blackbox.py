@@ -16,8 +16,11 @@ from slang.config.blackbox_config import(
     gpt4_headers,
     gpt4_payload
 )
+from log.logformat import CustomLogger
 from abc import ABC,abstractmethod
 
+
+logger = CustomLogger()
 
 
 BASEURL = "https://www.blackbox.ai/api/chat"
@@ -39,17 +42,17 @@ class BlackBox(ABC):
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return self.format_response(response_text)
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
 
     def format_response(self, response_text):
@@ -98,17 +101,17 @@ class BlackboxAI:
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return self.format_response(response_text)
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
 
     def format_response(self, response_text):
@@ -213,17 +216,17 @@ class GeminiPro(BlackboxAI):
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return super().format_response(response_text)
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
 
 
@@ -249,17 +252,17 @@ class GPT4:
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return response_text
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__nt(f"Unexpected error during request: {unexpected_error}")
             return ""
 
 
@@ -288,17 +291,17 @@ class DBRX:
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return response_text
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
 
 
