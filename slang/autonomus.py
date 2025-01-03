@@ -3,13 +3,16 @@ import asyncio
 import json
 import base64
 
-
+from slang.log.logformat import CustomLogger
 from slang.config.autonomus_config import (
     ANON_LLAMA_HEADERS,
     anonLlamaPayload,
     ANON_QWEN_HEADERS,
     anonQwenPayload
 )
+
+
+logger = CustomLogger()
 
 class Llama:
     def __init__(self, query: str):
@@ -43,7 +46,7 @@ class Llama:
             raise RuntimeError("Client session not initialized. Use async context manager.")
         
         async with self.session.post(self.url, headers=self.headers, json=self.payload) as response:
-            #print(f"Status: {response.status}")
+            logger.__INFO__(f"Status: {response.status}")
             
             full_response = ""
             async for line in response.content:
@@ -61,10 +64,10 @@ class Llama:
                             
                             full_response += content
                     except json.JSONDecodeError:
-                       # print(f"Error decoding JSON: {line_str}")
+                       logger.__ERROR__(f"Eror decoding JSON: {line_str}")
                        pass
                     except Exception as e:
-                        #print(f"Unexpected error: {e}")
+                        logger.__ERROR__(f"Unexpected error: {e}")
                         pass 
 
                     #i am not going too pass them but put them in a logger 
@@ -126,20 +129,20 @@ class QwenCoder:
                                     full_response += content
                             
                             except json.JSONDecodeError:
-                                print(f"Failed to decode JSON: {line_str}")
+                                logger.__ERROR__(f"Failed to decode JSON: {line_str}")
                             except Exception as json_error:
-                                print(f"Unexpected error processing JSON: {json_error}")
+                                logger.__ERROR__(f"Unexpected error processing JSON: {json_error}")
                     
                     except UnicodeDecodeError:
-                        print("Failed to decode line")
+                        logger.__ERROR__("Failed to decode line")
                     except Exception as line_error:
-                        print(f"Unexpected error processing line: {line_error}")
+                        logger.__ERROR__("Unexpected error processing line: {line_error}")
                 
                 return full_response.strip()
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
