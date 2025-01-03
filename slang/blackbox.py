@@ -20,7 +20,6 @@ from abc import ABC,abstractmethod
 
 
 
-
 BASEURL = "https://www.blackbox.ai/api/chat"
 class BlackBox(ABC):
     # @abstractmethod
@@ -207,7 +206,6 @@ class GeminiPro(BlackboxAI):
         if self.session:
             await self.session.close()
 
-
     async def get_response(self):
         if not self.session:
             raise RuntimeError("Client session not initialized. Use async context manager.")
@@ -263,10 +261,6 @@ class GPT4:
         except Exception as unexpected_error:
             print(f"Unexpected error during request: {unexpected_error}")
             return ""
-
-
-
-
 
 
 
