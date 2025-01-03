@@ -48,17 +48,7 @@ class NextChat:
                                        top_p=1,
                                        max_tokens=4000)
 
-    def __concatenate_content(self,response_text):
-        """
-        Extracts and concatenates the 'content' filed from a stream of JSON-like data.
-
-        Args:
-            reponse_text (str): The raw streamed response.
-
-        Returns:
-            str: The concatenated content.
-        """
-
+    def __concatenate_content(self,response_text)->str:
         content = []
 
         for line in response_text.splitlines():
@@ -73,7 +63,7 @@ class NextChat:
                 
         return ''.join(content)
     
-    async def fetch_chat(self):
+    async def fetch_chat(self)->str:
         async with aiohttp.ClientSession() as session:
             async with session.post(self.url, headers=self.headers, json=self.payload) as response:
                 #return f"Status: {response.status}\n"
@@ -89,7 +79,7 @@ class NextChat:
 
 
 class AskChat:
-    def __init__(self, query: str):
+    def __init__(self, query: str)->None:
         self.url = "https://www.teach-anything.com/api/generate"
         self.payload = askChatPlayload(query)
         self.headers = ASKCHAT_HEADERS
@@ -344,7 +334,7 @@ class Chatx:
                     return f'Error: {response.status}'
 
 class Morphic:
-    def __init__(self, query: str):
+    def __init__(self, query: str)->None:
         self.query = query
         self.url = "https://www.morphic.sh/api/chat-stream"
         self.headers = MORPHIC_HEADERS
@@ -390,7 +380,7 @@ class Morphic:
             
         return formatted_output
 
-    async def make_request(self):
+    async def make_request(self)->str:
         if not self.session:
             raise RuntimeError("Client session not initialized. Use async context manager.")
         
