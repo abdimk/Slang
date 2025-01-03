@@ -2,10 +2,14 @@ import aiohttp
 import asyncio
 import json
 
+from log.logformat import CustomLogger
+
 from config.llama_config import (
     CHATLLAMA_HEADERS,
     chat_llama_payload
 )
+
+logger = CustomLogger()
 
 class ChatLlama:
     
@@ -47,13 +51,13 @@ class ChatLlama:
                         
                         except json.JSONDecodeError:
                         
-                            print(f"\nError parsing JSON: {line}")
+                            logger.__ERROR__(f"\nError parsing JSON: {line}")
                     else:
                         
-                        print(f"\nUnexpected line: {line}")
+                        logger.__ERROR__(f"\nUnexpected line: {line}")
                 
                 except Exception as e:
-                    print(f"\nError processing line: {e}")
+                    logger.__ERROR__(f"\nError processing line: {e}")
             
             return full_content
 

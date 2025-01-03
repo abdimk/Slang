@@ -16,7 +16,7 @@ from slang.config.blackbox_config import(
     gpt4_headers,
     gpt4_payload
 )
-from log.logformat import CustomLogger
+from slang.log.logformat import CustomLogger
 from abc import ABC,abstractmethod
 
 
@@ -266,9 +266,6 @@ class GPT4:
             return ""
 
 
-
-
-
 class DBRX:
     def __init__(self,query:str):
         self.headers = dbrx_headers()
@@ -305,9 +302,6 @@ class DBRX:
             return ""
 
 
-
-
-
 #@Meta-Llama-3.3-70B-Instruct-Turbo hello
 
 class MetaLlama3InstructTurbo:
@@ -332,17 +326,17 @@ class MetaLlama3InstructTurbo:
         try:
             async with self.session.post(BASEURL, headers=self.headers, json=self.payload) as response:
                 if response.status != 200:
-                    print(f"HTTP request failed with status {response.status}")
+                    logger.__ERROR__(f"HTTP request failed with status {response.status}")
                     return ""
                 
                 response_text = await response.text()
                 return response_text
         
         except aiohttp.ClientError as client_error:
-            print(f"Client connection error: {client_error}")
+            logger.__ERROR__(f"Client connection error: {client_error}")
             return ""
         except Exception as unexpected_error:
-            print(f"Unexpected error during request: {unexpected_error}")
+            logger.__ERROR__(f"Unexpected error during request: {unexpected_error}")
             return ""
 
 

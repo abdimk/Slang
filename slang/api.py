@@ -9,10 +9,13 @@ import msgspec
 from types import TracebackType
 from typing import AsyncGenerator, Self
 from fake_useragent import UserAgent
-from slang.exceptions import (ConversationLimitException,
-                              DuckChatException,
-                              RatelimitException)
-
+# from slangexceptions import (ConversationLimitException,
+#                               DuckChatException,
+#                               RatelimitException)
+from slang.exceptions import(
+    ConversationLimitException,
+    DuckChatException,
+    RatelimitException)
 from slang.models import model_type,models
 from slang.config.cust_config import (
     NEXTCHAT_HEADERS,ASKCHAT_HEADERS,CHATX_HEADERS,MORPHIC_HEADERS,
@@ -32,24 +35,18 @@ from slang.blackbox import GeminiPro,GPT4
 
 
 class NextChat:
-    def __init__(self,text:str,user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:
+    def __init__(self,query:str,user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:
 
         self.user_agent = user_agent if type(user_agent) is str else UserAgent.random
         self.url = "https://gpt24-ecru.vercel.app/api/openai/v1/chat/completions"
         self.headers = NEXTCHAT_HEADERS
-
-        self.query = text
-
-        # default shit [don't mess with this]
-        self.stream = True
-        self.model = Generative_Models.GPT4o_Mini.value
-        self.temperature = 0.5
-        self.presence_penalty = 0
-        self.frequency_penalty = 0
-        self.top_p = 1
-        self.max_tokens = 4000
-
-        self.payload = nextChatPayload(text,True,Generative_Models.GPT4o_Mini.value,0.5,0,0,1,4000)
+        self.payload = nextChatPayload(query,stream=True,
+                                       model=Generative_Models.GPT4o_Mini.value,
+                                       temperature=0.5,
+                                       presence_penalty=0,
+                                       frequency_penalty=0,
+                                       top_p=1,
+                                       max_tokens=4000)
 
     def __concatenate_content(self,response_text):
         """
