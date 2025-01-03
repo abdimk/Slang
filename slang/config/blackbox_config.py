@@ -202,3 +202,164 @@ def get_geminiPro_payload(query:str,maxTokens:int=None):
         "imageGenerationMode": False,
         "webSearchModePrompt": False
     }
+
+
+
+
+def gpt4_headers():
+    return {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Content-Type": "application/json",
+        "Origin": "https://www.blackbox.ai",
+        "Referer": "https://www.blackbox.ai/",
+        "Sec-Ch-Ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A_Brand";v="24"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Linux"'
+    }
+
+def gpt4_payload(query):
+    return {
+        "messages": [
+            {
+                "id": "ayY6bz7",
+                "content": query,
+                "role": "user"
+            }
+        ],
+        "id": "ayY6bz7",
+        "previewToken": None,
+        "userId": None,
+        "codeModelMode": True,
+        "agentMode": {},
+        "trendingAgentMode": {},
+        "isMicMode": False,
+        "userSystemPrompt": None,
+        "maxTokens": 1024,
+        "playgroundTopP": None,
+        "playgroundTemperature": None,
+        "isChromeExt": False,
+        "githubToken": "",
+        "clickedAnswer2": False,
+        "clickedAnswer3": False,
+        "clickedForceWebSearch": False,
+        "visitFromDelta": False,
+        "mobileClient": False,
+        "userSelectedModel": "GPT-4o",
+        "validated": "00f37b34-a166-4efb-bce5-1312d87f2f94",
+        "imageGenerationMode": False,
+        "webSearchModePrompt": False
+    }
+
+
+#MetaLlamaTurbo
+
+def get_llama_headers():
+     # Headers from the request details
+    return {
+        "authority": "www.blackbox.ai",
+        "method": "POST",
+        "path": "/api/chat",
+        "scheme": "https",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br, zstd",
+        "accept-language": "en-US,en;q=0.9",
+        "content-type": "application/json",
+        "origin": "https://www.blackbox.ai",
+        "referer": "https://www.blackbox.ai/",
+        "sec-ch-ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Linux"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+    }
+
+def get_llama_payload(query):
+        # Payload from the request details
+    return {
+        "messages": [
+            {
+                "id": "JbxhaHv",
+                "content": f"@Meta-Llama-3.3-70B-Instruct-Turbo {query}",
+                "role": "user"
+            }
+        ],
+        "id": "JbxhaHv",
+        "previewToken": None,
+        "userId": None,
+        "codeModelMode": True,
+        "agentMode": {
+            "mode": True,
+            "id": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+            "name": "Meta-Llama-3.3-70B-Instruct-Turbo"
+        },
+        "trendingAgentMode": {},
+        "isMicMode": False,
+        "userSystemPrompt": None,
+        "maxTokens": 1024,
+        "playgroundTopP": None,
+        "playgroundTemperature": None,
+        "isChromeExt": False,
+        "githubToken": "",
+        "clickedAnswer2": False,
+        "clickedAnswer3": False,
+        "clickedForceWebSearch": False,
+        "visitFromDelta": False,
+        "mobileClient": False,
+        "userSelectedModel": None,
+        "validated": "00f37b34-a166-4efb-bce5-1312d87f2f94",
+        "imageGenerationMode": False,
+        "webSearchModePrompt": False
+    }
+
+
+
+def dbrx_headers():
+    return {
+        'authority': 'www.blackbox.ai',
+        'method': 'POST',
+        'path': '/api/chat',
+        'scheme': 'https',
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br, zstd',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/json',
+        'origin': 'https://www.blackbox.ai',
+        'priority': 'u=1, i',
+        'referer': 'https://www.blackbox.ai/',
+        'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Linux"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+    }
+
+def dbrx_payload(query):
+    return {
+        "messages": [{"id": "fivg5qU", "content": f"@DBRX-Instruct {query}", "role": "user"}],
+        "id": "fivg5qU",
+        "previewToken": None,
+        "userId": None,
+        "codeModelMode": True,
+        "agentMode": {"mode": True, "id": "databricks/dbrx-instruct", "name": "DBRX-Instruct"},
+        "trendingAgentMode": {},
+        "isMicMode": False,
+        "userSystemPrompt": None,
+        "maxTokens": 1024,
+        "playgroundTopP": None,
+        "playgroundTemperature": None,
+        "isChromeExt": False,
+        "githubToken": "",
+        "clickedAnswer2": False,
+        "clickedAnswer3": False,
+        "clickedForceWebSearch": False,
+        "visitFromDelta": False,
+        "mobileClient": False,
+        "userSelectedModel": None,
+        "validated": "00f37b34-a166-4efb-bce5-1312d87f2f94",
+        "imageGenerationMode": False,
+        "webSearchModePrompt": False
+    }
