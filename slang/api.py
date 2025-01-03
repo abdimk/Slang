@@ -8,13 +8,18 @@ import aiohttp
 import msgspec
 from types import TracebackType
 from typing import AsyncGenerator, Self
-from datetime import datetime
 from fake_useragent import UserAgent
 from slang.exceptions import (ConversationLimitException,
                               DuckChatException,
                               RatelimitException)
 
 from slang.models import model_type,models
+from slang.config.cust_config import (
+    NEXTCHAT_HEADERS,ASKCHAT_HEADERS,CHATX_HEADERS,MORPHIC_HEADERS,
+    nextChatPayload,askChatPlayload,morphic_payload
+)
+
+
 
 Generative_Models = model_type.DuckModelType
 
@@ -24,25 +29,14 @@ from slang.autonomus import Llama,QwenCoder
 from slang.blackbox import ClaudeAI,BlackboxAI
 from slang.blackbox import GeminiPro,GPT4
 
-"""
-To do 
 
-
-Historical Data Analysis
-Term selection
-quick recap
-"""
 
 class NextChat:
-    def __init__(self,text:str, time=datetime.now(),user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:
+    def __init__(self,text:str,user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:
 
         self.user_agent = user_agent if type(user_agent) is str else UserAgent.random
         self.url = "https://gpt24-ecru.vercel.app/api/openai/v1/chat/completions"
-        self.headers = {
-            "accept": "application/json, text/event-stream",
-            "content-type": "application/json",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        }
+        self.headers = NEXTCHAT_HEADERS
 
         self.query = text
 
@@ -55,27 +49,7 @@ class NextChat:
         self.top_p = 1
         self.max_tokens = 4000
 
-        self.payload = {
-            "messages": [
-                {"role": "system", 
-                "content": "You are ChatGPT, a large language model trained by OpenAI.\n"
-                                            "Knowledge cutoff: 2024-10\n"
-                                            "Current model: gpt-4o\n"
-                                            f"Current time: {time}\n"
-                                            "Latex inline: \\(x^2\\)\n"
-                                            "Latex block: $$e=mc^2$$\n"},
-                {"role": "user", 
-                "content": f"{self.query}"}
-            ],
-            "stream": self.stream,
-            "model": self.model,
-            "temperature": self.temperature,
-            "presence_penalty": self.presence_penalty,
-            "frequency_penalty": self.frequency_penalty,
-            "top_p": self.top_p,
-            "max_tokens": self.max_tokens
-        }
-
+        self.payload = nextChatPayload(text,True,Generative_Models.GPT4o_Mini.value,0.5,0,0,1,4000)
 
     def __concatenate_content(self,response_text):
         """
@@ -120,28 +94,8 @@ class NextChat:
 class AskChat:
     def __init__(self, query: str):
         self.url = "https://www.teach-anything.com/api/generate"
-        self.query = query
-        self.user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        self.now = datetime.now()
-        self.payload = {
-            "prompt": f"Pretend you are GPT-4 model. Explain {self.query} English with a simple example.\n"
-                      "Knowledge cutoff: 2024-10\n"
-                      "Current model: gpt-4o\n"
-                      f"Current time: {self.now}\n"
-                      "Latex inline: \\(x^2\\)\n"
-                      "Latex block: $$e=mc^2$$\n"
-                      
-        }
-
-        self.headers = {
-            "Accept": "*/*",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Content-Type": "application/json",
-            "Origin": "https://www.teach-anything.com",
-            "Referer": "https://www.teach-anything.com/",
-            "User-Agent": self.user_agent,
-        }
+        self.payload = askChatPlayload(query)
+        self.headers = ASKCHAT_HEADERS
 
     async def get_answer(self) -> str:
         async with aiohttp.ClientSession() as session:
@@ -375,14 +329,8 @@ class Chatx:
     def __init__(self, text) -> None:
         self.query = text
         self.url = "https://www.pizzagpt.it/api/chatx-completion"
-        self.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-            'Origin': 'https://www.pizzagpt.it',
-            'Referer': 'https://www.pizzagpt.it/en',
-            'x-secret': 'Marinara'
-        }
+        self.headers = CHATX_HEADERS
+           
 
         self.payload = {
             'question': f'{self.query}'
@@ -402,33 +350,8 @@ class Morphic:
     def __init__(self, query: str):
         self.query = query
         self.url = "https://www.morphic.sh/api/chat-stream"
-        self.headers = {
-            "Accept": "*/*",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Content-Type": "application/json",
-            "Cookie": "copilot:state=false; images:state=false; ph_phc_HK6KqP8mdSmxDjoZtHYi3MW8Kx5mHmlYpmgmZnGuaV5_posthog=%7B%22distinct_id%22%3A%220193be60-3f74-7aab-b7e2-59fd224fd2ed%22%2C%22%24sesid%22%3A%5B1734099588434%2C%220193c062-f1f3-7496-960e-b0a08da05057%22%2C1734099530227%5D%7D",
-            "Origin": "https://www.morphic.sh",
-            "Referer": "https://www.morphic.sh/",
-            "Sec-CH-UA": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-            "Sec-CH-UA-Mobile": "?0",
-            "Sec-CH-UA-Platform": '"Linux"',
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-        }
-        self.payload = {
-            "messages": [
-                {
-                    "role": "user",
-                    "content": f"{self.query}",
-                    "type": "input",
-                    "id": "clkCqnlbfqNTvOna",
-                    "status": "done"
-                }
-            ]
-        }
+        self.headers = MORPHIC_HEADERS
+        self.payload = morphic_payload(query)
         self.session = None
 
     async def __aenter__(self):
