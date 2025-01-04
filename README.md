@@ -41,7 +41,7 @@ python -m claude -c "prompt" -m "8B"
 ```
 
 
-<h2>Use as a package</h2>
+<h3>Use as a package</h3>
 
 ```python
 import asyncio
@@ -64,7 +64,7 @@ if __name__ =="__main__":
     asyncio.run(main())
 ```
 
-<h3> using Llama Models </h3>
+<h3> Using Llama Models </h3>
 
 ```python
 from slang.api import Llama_Models
