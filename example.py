@@ -8,15 +8,17 @@ from slang.api import AskChat,Chatx,NextChat,Morphic
 from slang.api import Llama,QwenCoder
 from slang.api import ClaudeAI
 from slang.api import ChatLlama
-from scripts.execute import execute_command
-
+# from scripts.execute import execute_command
+from scripts.typeffect import typeeffect
 M = model_type.DuckModelType
 Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
-async def main():
-    async with ChatLlama("what is your model",Lm) as lm1:
-        response = await lm1.get_response()
-        print(response)
+# async def main():
+#     async with ChatLlama("what is your model",Lm) as lm1:
+#         response = await lm1.get_response()
+#         print(response)
+
+
 
 # async def main():
 #     async with Morphic("") as l1:
@@ -24,10 +26,10 @@ async def main():
 #         await typeeffect(response,0.0001)
 
 
-# async def main():
-#     async with ClaudeAI("what is my name")as l1:
+# async def main()->str:
+#     async with ClaudeAI("Define a tesseract")as l1:
 #         response = await l1.get_response()
-#         print(response)
+#         await typeeffect(response)
 
 # #Llama QewnCoder parameters 
 # async def main():
@@ -36,11 +38,12 @@ async def main():
 #         await typeeffect(response,0.03)
 
 
-# #Llama 405B parameters 
+#Llama 405B parameters 
 # async def main():
 #     async with Llama("john the ripper") as l1:
 #         response = await l1.get_response()
-#         await typeeffect(response,0.03)
+#         print(response)
+        # await typeeffect(response,0.03)
 
 
 
@@ -90,5 +93,5 @@ async def main():
 
     
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
