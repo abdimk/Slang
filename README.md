@@ -22,7 +22,7 @@ python3 -m venv myenv && source myenv/bin/activate
 
 ### Clone the repository
 ```bash
-git clone https://github.com/abdimk/Slang
+git clone https://github.com/abdimk/Slang && pip install dist/slang-0.6-py3-none-any.whl 
 ```
 
 ### Install the dependencies
