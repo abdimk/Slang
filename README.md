@@ -13,7 +13,7 @@
 
 ### Create a virtual python enviroment
 ```bash
-python3 -venv myenv && source myenv/bin/activate
+python3 -m venv myenv && source myenv/bin/activate
 ```
 
 ### Clone the repository
@@ -23,7 +23,7 @@ git clone https://github.com/abdimk/Slang
 
 ### Install the dependencies
 ```bash
-cd Slang && pip install -U .
+cd Slang && pip install -U . && clear
 ```
 
 <h2>Usage</h2>
