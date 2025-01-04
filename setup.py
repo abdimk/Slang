@@ -1,9 +1,10 @@
 from setuptools import setup, find_packages
 
-
+with open("README.md", "r") as f:
+    description = f.read()
 setup(
     name="slang",
-    version='0.6',
+    version='0.9',
     packages=find_packages(),
     install_requires=[
         'aiohappyeyeballs>=2.4.4',
@@ -30,9 +31,11 @@ setup(
     ],
     entry_points = {
         "console_scripts":[
-            "slang = slang.cli:main" 
+            "slang = slang.cli:app" 
         ]
-    }
+    },
+    long_description=description,
+    long_description_content_type='text/markdown',
 
     
 )
