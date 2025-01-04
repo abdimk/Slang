@@ -10,10 +10,9 @@
 
 
 - This is in the early stages, so you might experience some issues.
-- You can basically do whatever you want with it
-- I am not responsible for any illegal use of this repository.
 - This is not for commercial use and barely works!
 - A lot of refactoring is still expected as this is part of my final year project.
+
 <h2>Installation</h2>
 
 ### Create a virtual python enviroment
