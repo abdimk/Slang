@@ -53,11 +53,10 @@ from scripts.typeffect import typeeffect
 
 
 #To use ClaudeAI
-async def main():
+async def main()->None:
     async with ClaudeAI("prompt",system_prompt="",maxTokens=1024) as cld:
         response = await cld.get_response()
         print(response)
-
         #for typer effect
         await typeeffect(response)
 
@@ -77,21 +76,21 @@ You can choose between [1B, 3B, 8B, 70B, 405B] parameters
 Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
 
-async def main():
+async def Lamalight()->None:
     async with ChatLlama("Tell me a joke",Lm) as lm1:
         response = await lm1.get_response()
         print(response)
 
 
 # To use 405B parameters
-async def LlamaBig():
+async def LlamaBig()->None:
     async with Llama("Tell me a Joke",Lm) as lm1:
         response = await lm1.get_response()
         print(response)
 
 
 if __name__ =="__main__":
-    asyncio.run(main())
+    asyncio.run(Lamalight())
     asyncio.run(LlamaBig())
 
 ```

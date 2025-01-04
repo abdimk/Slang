@@ -13,10 +13,10 @@ from scripts.typeffect import typeeffect
 M = model_type.DuckModelType
 Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
-# async def main():
-#     async with ChatLlama("what is your model",Lm) as lm1:
-#         response = await lm1.get_response()
-#         print(response)
+async def Llamalight():
+    async with ChatLlama("what is your model",Lm) as lm1:
+        response = await lm1.get_response()
+        print(response)
 
 
 
@@ -93,5 +93,5 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
     
 
-# if __name__ == "__main__":
-#     asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(Llamalight())
