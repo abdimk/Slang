@@ -2,9 +2,10 @@ import aiohttp
 import asyncio
 import json
 
-from log.logformat import CustomLogger
+from slang.log.logformat import CustomLogger
+from slang.models.model_type import LlamaModels 
 
-from config.llama_config import (
+from slang.config.llama_config import (
     CHATLLAMA_HEADERS,
     chat_llama_payload
 )

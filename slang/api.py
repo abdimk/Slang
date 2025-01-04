@@ -22,17 +22,16 @@ from slang.config.cust_config import (
     nextChatPayload,askChatPlayload,morphic_payload
 )
 
+#Generative Models 
 
-
-Generative_Models = model_type.DuckModelType
-
-
-##llama from balckbox ai
 from slang.autonomus import Llama,QwenCoder
 from slang.blackbox import ClaudeAI,BlackboxAI
 from slang.blackbox import GeminiPro,GPT4
+from slang.llamachat import ChatLlama
 
 
+Generative_Models = model_type.DuckModelType
+Llama_Models = model_type.LlamaModels
 
 class NextChat:
     def __init__(self,query:str,user_agent:UserAgent | str = UserAgent(min_version=120.0))->None:

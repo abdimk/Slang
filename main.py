@@ -2,11 +2,12 @@ import asyncio
 import sys
 import re 
 
-from slang.api import DuckChat,model_type
+from slang.api import DuckChat,model_type,Llama_Models
 from slang.api import AskChat,Chatx,NextChat,Morphic
-from lang.lesan import Lesan
+
 from slang.api import Llama,QwenCoder
 from slang.api import ClaudeAI
+from slang.api import ChatLlama
 
 M = model_type.DuckModelType
 
@@ -28,14 +29,11 @@ def remove_markdown_formatting(text: str) -> str:
     return text
 
 
-Custom_query = {
-    'prompt':'',
-    "filter":"",
-    "exporeHttp":'',
-    "systemDate":"",
-    "disabledTopics":[],
-    "transformerModels":""
-}
+# async def main():
+#     async with ChatLlama("What is a tesseract", Llama_Models.Meta_Llama_3_2_3B_Instruct.value) as lm1:
+#         response = await lm1.get_response()
+#         print(response)
+
 
 
 # async def main():
@@ -45,10 +43,10 @@ Custom_query = {
 
 
 
-async def main():
-    async with ClaudeAI("what is your model") as l1:
-        response = await l1.get_response()
-        print(response)
+# async def main():
+#     async with ClaudeAI("what is your model") as l1:
+#         response = await l1.get_response()
+#         print(response)
 
 
 
@@ -71,30 +69,33 @@ async def main():
 # async def main():
 #     async with Morphic("john the ripper") as m1:
 #         response = await m1.make_request()
-#         await typeeffect(response,0.03)
+#         print(response)
+        # await typeeffect(response,0.03)
 
 
 
-# query = input("Your question:")
-# async def main(question: str = "") -> str:
-#     async with DuckChat(M.GPT4o_Mini) as d1:
-#         response = await d1.ask_question(question)
-#         response = remove_markdown_formatting(response)
-#         await typeeffect(response,0.02)
+# query = "what is your model"
+# async def main() -> str:
+#     async with DuckChat(M.Claude) as d1:
+#         response = await d1.ask_question(query)
+#         print(response)
+#         # response = remove_markdown_formatting(response)
+#         # await typeeffect(response,0.02)
 
 
-#AskChat
-# query = input("Your question:")
-# async def main(query:str)->str:
+
+# query = "what is your model"
+# async def main()->str:
 #     chat_instance = AskChat(query)
 #     answer = await chat_instance.get_answer()
-#     await typeeffect(answer, 0.02)
+#     print(answer)
     
-#query = input("Your question:")
-#async def main(query: str)->str:
+# query = "what is your model"
+# async def main()->str:
 #    chat_instance = NextChat(query)
 #    answer = await chat_instance.fetch_chat()
-#    #translated = Lesan(answer).translate("am")
+#    print(answer)
+   #translated = Lesan(answer).translate("am")
 #    await typeeffect(answer, 0.02)
 
 
