@@ -8,6 +8,10 @@
 ## About
 <p>Slang alows you to send and customize your LLM form terminal [No Tokens Required]</p>
 
+- Its on early stage you might experance some issues 
+- You Basically can do what ever the you want ! NB(i am not responsible for illegal use of this repo)
+- This's is Not for Commercal use its barely works !
+- There is still a lot of refactoring expected since this is a part of my final year Project
 
 <h2>Installation</h2>
 
