@@ -73,7 +73,7 @@ from slang.api import Llama # 405B
 """
 You can choose between [1B, 3B, 8B, 70B, 405B] parameters
 """
-Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
+Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value #Choose from the given models 
 
 
 async def Lamalight()->None:
