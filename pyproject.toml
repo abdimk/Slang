@@ -1,19 +1,29 @@
 [tool.poetry]
-name = "slang-cli"  # Use a unique name
+name = "slang-cli"
 version = "0.1.0"
 description = "A CLI app for interacting with AI models"
 authors = ["Abdisa Merga <abdisamk@gmail.com>"]
 readme = "README.md"
-packages = [{include = "slang"}]  # Ensure this matches your package structure
+packages = [{include = "slang"}]  # Adjust this if your package structure is different
 
 [tool.poetry.dependencies]
 python = "^3.8"
 typer = "^0.9.0"
 rich = "^13.9.4"
-# Add other dependencies from your requirements
+aiohttp = "^3.11.10"
+typer = "^0.15.1"
+Brotli=="1.1.0"
+chardet= "5.2.0"
+fake-useragent = "2.0.1"
+msgspec = "0.19.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+# Add development dependencies
 
 [tool.poetry.scripts]
-slang = "slang.cli:app"  # This enables the 'slang' command
+slang = "cli:app"  # Adjust this to match your actual CLI entry point
 
 [build-system]
 requires = ["poetry-core"]
