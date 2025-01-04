@@ -12,11 +12,12 @@ from rich.table import Table
 from rich import box
 
 from slang.api import ClaudeAI,GeminiPro
-from slang.api import QwenCoder,Llama,Morphic,GPT4
-from slang.api import DuckChat,model_type
+from slang.api import QwenCoder,Llama,Morphic,GPT4,ChatLlama
+from slang.api import DuckChat,model_type,Llama_Models
 
 
 M = model_type.DuckModelType
+
 
 console = Console()
 
@@ -28,9 +29,8 @@ app = typer.Typer()
 def main() -> None:
     """Default command."""
     try:
-        # Your main logic
-        message = Text("Hello, world! Welcome to the CLI application.", style="bold green")
-        panel = Panel(message, title="Welcome", subtitle="Powered by Rich", expand=False)
+        message = Text("Slang CLI: https://github.com/abdimk/Slang", style="bold green")
+        panel = Panel(message, title="Welcome", subtitle="Powered by Rich CLI", expand=False)
         console.print(panel)
     
     except Exception as e:
@@ -104,143 +104,6 @@ def about(all: Optional[bool] = typer.Option(False, "-all", help="Shows details 
             title="Additional Information",
             border_style="blue"
         ))
-
-@app.command()
-def llama(
-    query: str = typer.Option(..., "-c", "--command", help="The query to send to ClaudeAI")
-) -> None:
-    """
-    Send a query to ClaudeAI and display the response with Markdown formatting.
-    """
-    async def run_query():
-        try:
-            with console.status("[bold white] Llama 3 [/bold white]", spinner="dots"):
-                async with Llama(query) as d1:
-                    response = await d1.get_response()
-            
-            markdown_content = Markdown(response)
-            panel = Panel(
-                markdown_content,
-                title="Llama 3.1 Response",
-                border_style="green",
-                expand=True
-            )
-            console.print(panel)
-        
-        except Exception as e:
-            error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
-                title="Error",
-                border_style="red",
-                expand=False
-            )
-            console.print(error_panel)
-
-    
-    asyncio.run(run_query())
-
-
-
-@app.command()
-def claude3(query: str = typer.Option(..., "-c", "--command",help="The query to send to ClaudeAI")) -> None:
-    """
-    Send a query to Claude3 Haiku  
-    """
-
-    async def run_query():
-        try:
-            with console.status("[bold white] Claude3 Haiku [/bold white]", spinner="dots"):
-                async with DuckChat(M.Claude) as D1:
-                    response = await D1.ask_question(query)
-
-                markdown_content = Markdown(response)
-                panel = Panel(
-                    markdown_content,
-                    title="Claude3 Haiku",
-                    border_style="red",
-                    expand=True
-                )
-
-                console.print(panel)
-        except Exception as e:
-            error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
-                title="Error",
-                border_style="red",
-                expand=False
-            )
-            console.print(error_panel)
-
-    
-    asyncio.run(run_query())
-
-
-
-@app.command()
-def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to send to ClaudeAI")) -> None:
-    """
-    Send a query to QwenCoder with 2.1B parameters
-    """
-
-    async def run_query():
-        try:
-            with console.status("[bold white] Morphic[/bold white]", spinner="dots"):
-                async with Morphic(query) as m1:
-                    response = await m1.make_request()
-
-                markdown_content = Markdown(response)
-                panel = Panel(
-                    markdown_content,
-                    title="Morphic",
-                    border_style="red",
-                    expand=True
-                )
-
-                console.print(panel)
-        except Exception as e:
-            error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
-                title="Error",
-                border_style="red",
-                expand=False
-            )
-            console.print(error_panel)
-
-    
-    asyncio.run(run_query())
-
-@app.command()
-def qwen(query: str = typer.Option(..., "-c", "--command",help="The query to send to ClaudeAI")) -> None:
-    """
-    Send a query to QwenCoder with 2.1B parameters
-    """
-
-    async def run_query():
-        try:
-            with console.status("[bold white] QwenCoder[/bold white]", spinner="dots"):
-                async with QwenCoder(query) as q1:
-                    response = await q1.get_response()
-
-                markdown_content = Markdown(response)
-                panel = Panel(
-                    markdown_content,
-                    title="QwenCoder",
-                    border_style="red",
-                    expand=True
-                )
-
-                console.print(panel)
-        except Exception as e:
-            error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
-                title="Error",
-                border_style="red",
-                expand=False
-            )
-            console.print(error_panel)
-
-    
-    asyncio.run(run_query())
             
 @app.command()
 def claude(
@@ -276,82 +139,27 @@ def claude(
     
     asyncio.run(run_query())
 
-
 @app.command()
-def chat(system_prompt: Optional[str] = typer.Option(None, "-s", "--system", help="Optional system prompt to set the context"),) -> None:
+def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to send to ClaudeAI")) -> None:
     """
-    Start an interactive chat session with ClaudeAI.
-    Type 'exit' or 'quit' to end the conversation.
+    Send a query to Morphic search engine 
     """
-    async def run_chat():
-        
-        try:
-            async with ClaudeAI(system_prompt) as l1:
-                console.print("[bold green]Chat session started. Type 'exit' or 'quit' to end.[/bold green]")
-                
-                
-                while True:
-                    
-                    user_input = console.input("[bold blue]You: [/bold blue]")
-                    
-                    
-                    if user_input.lower() in ['exit', 'quit', 'q']:
-                        console.print("[bold yellow]Chat session ended.[/bold yellow]")
-                        break
-                    
-                    
-                    try:
-                        with console.status("[bold white] Generating response...[/bold white]", spinner="dots"):
-                            response = await l1.get_response(user_input)
-                        
-                        
-                        markdown_content = Markdown(response)
-                        panel = Panel(
-                            markdown_content,
-                            title="Claude3.5 Response",
-                            border_style="green",
-                            expand=True
-                        )
-                        console.print("[bold blue]Claude:[/bold blue]")
-                        console.print(panel)
-                    
-                    except Exception as e:
-                        error_panel = Panel(
-                            Text(f"Error: {str(e)}", style="bold red"),
-                            title="Error",
-                            border_style="red",
-                            expand=False
-                        )
-                        console.print(error_panel)
-        
-        except Exception as e:
-            console.print(f"[bold red]Failed to start chat session: {e}[/bold red]")
 
-    
-    asyncio.run(run_chat())
-
-@app.command()
-def gemini(
-    query: str = typer.Option(..., "-c", "--command", help="The query to send to ClaudeAI")
-) -> None:
-    """
-    Send a query to ClaudeAI and display the response with Markdown formatting.
-    """
     async def run_query():
         try:
-            with console.status("[bold white] GeminiPro [/bold white]", spinner="dots"):
-                async with GeminiPro(query,maxTokens=200) as l1:
-                    response = await l1.get_response()
-            
-            markdown_content = Markdown(response)
-            panel = Panel(
-                markdown_content,
-                title="GeminiPro Response",
-                border_style="yellow",
-                expand=True
-            )
-            console.print(panel)
-        
+            with console.status("[bold white] Morphic[/bold white]", spinner="dots"):
+                async with Morphic(query) as m1:
+                    response = await m1.make_request()
+
+                markdown_content = Markdown(response)
+                panel = Panel(
+                    markdown_content,
+                    title="Morphic",
+                    border_style="red",
+                    expand=True
+                )
+
+                console.print(panel)
         except Exception as e:
             error_panel = Panel(
                 Text(f"Error: {str(e)}", style="bold red"),
@@ -366,29 +174,27 @@ def gemini(
 
 
 
-#test
 @app.command()
-def gpt4black(
-    query: str = typer.Option(..., "-c", "--command", help="The query to send to ClaudeAI")
-) -> None:
+def qwen(query: str = typer.Option(..., "-c", "--command",help="The query to send to QwenCoderAI")) -> None:
     """
-    Send a query to ClaudeAI and display the response with Markdown formatting.
+    Send a query to QwenCoder with 2.1B parameters
     """
+
     async def run_query():
         try:
-            with console.status("[bold white] GPT4 [/bold white]", spinner="dots"):
-                async with GPT4(query) as l1:
-                    response = await l1.get_response()
-            
-            markdown_content = Markdown(response)
-            panel = Panel(
-                markdown_content,
-                title="GPT4 Response",
-                border_style="yellow",
-                expand=True
-            )
-            console.print(panel)
-        
+            with console.status("[bold white] QwenCoder[/bold white]", spinner="dots"):
+                async with QwenCoder(query) as q1:
+                    response = await q1.get_response()
+
+                markdown_content = Markdown(response)
+                panel = Panel(
+                    markdown_content,
+                    title="QwenCoder",
+                    border_style="red",
+                    expand=True
+                )
+
+                console.print(panel)
         except Exception as e:
             error_panel = Panel(
                 Text(f"Error: {str(e)}", style="bold red"),
@@ -398,9 +204,56 @@ def gpt4black(
             )
             console.print(error_panel)
 
+    
     asyncio.run(run_query())
 
 
+
+@app.command()
+def llama(query: str = typer.Option(..., "-c", "--command",help="The query to send to Llama Light"),
+         model: str = typer.Option("8B", "-m", "--model", help="The model to use, e.g., [1B,3B,8B,70B]")
+         ) -> None:
+    """
+    Send a query to Llama with from 1B - 70Bparameters
+    """
+    lm = Llama_Models
+
+    # Create a mapping of model values to their corresponding Llama_Models attributes
+    model_mapping = {
+        "1B": lm.Meta_Llama_3_2_1B_Instruct.value,
+        "3B": lm.Meta_Llama_3_2_3B_Instruct.value,
+        "8B": lm.Meta_Llama_3_2_1_8B_Instruct.value,
+        "70B": lm.Meta_Llama_3_2_1_70B_Instruct.value
+    }
+
+
+    lm = model_mapping.get(model, lm.Meta_Llama_3_2_1_8B_Instruct.value)
+    async def run_query():
+        try:
+            with console.status(f"[bold white] {lm}[/bold white]", spinner="dots"):
+                async with ChatLlama(query,lm) as q1:
+                    response = await q1.get_response()
+
+                markdown_content = Markdown(response)
+                panel = Panel(
+                    markdown_content,
+                    title=f"{model}",
+                    border_style="red",
+                    expand=True
+                )
+
+                console.print(panel)
+        except Exception as e:
+            error_panel = Panel(
+                Text(f"Error: {str(e)}", style="bold red"),
+                title="Error",
+                border_style="red",
+                expand=False
+            )
+            console.print(error_panel)
+
+    
+    asyncio.run(run_query())
 
 
 if __name__ == "__main__":

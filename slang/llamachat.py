@@ -48,7 +48,7 @@ class ChatLlama:
                                 content = data['choices'][0]['delta'].get('content', '')
                                 if content:
                                     full_content += content
-                                    print(content, end='', flush=True)
+                                    # print(content, end='', flush=True)
                         
                         except json.JSONDecodeError:
                         

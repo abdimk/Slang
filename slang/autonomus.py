@@ -129,7 +129,8 @@ class QwenCoder:
                                     full_response += content
                             
                             except json.JSONDecodeError:
-                                logger.__ERROR__(f"Failed to decode JSON: {line_str}")
+                                # logger.__ERROR__(f"Failed to decode JSON: {line_str}")
+                                pass 
                             except Exception as json_error:
                                 logger.__ERROR__(f"Unexpected error processing JSON: {json_error}")
                     

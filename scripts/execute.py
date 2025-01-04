@@ -1,9 +1,9 @@
 import subprocess
 
-def execute_command(command):
+async def execute_command(command):
     try:
-        result = subprocess.run(command, shell=True, text=True, capture_output=True)
+        # Execute the command and get the output
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
         return result.stdout if result.returncode == 0 else result.stderr
     except Exception as e:
-        return f"Error: {e}"
-
+        return str(e)

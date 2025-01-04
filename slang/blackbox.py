@@ -1,7 +1,7 @@
 import aiohttp
 import asyncio
 import json
-
+import os
 from slang.config.blackbox_config import(
     BLACKBOX_HEADERS,
     get_blackbox_payload,
@@ -134,30 +134,40 @@ class BlackboxAI:
         # formatted_response = f"""{search_results} AI Response:{ai_response}"""
         formatted_response = f"{ai_response}"
         return formatted_response
-
-
-
-class ClaudeAI:
-    def __init__(self, query: str,system_prompt:str=None,
-                 role:str = "user",
-                 previewToken:bool=False,
-                 userSystemPrompt:bool=False,
-                 maxTokens:int=1024,
-                 codeModelMode:bool=False
-                 ):
-        self.query = query
-        self.headers = get_claude_headers()
-        self.payload = get_claude_payload(query)
-        self.session = None
-        
-        # message defaults
-        self.role = role,
-        self.previewToken=previewToken,
-        self.userSystemPrompt = userSystemPrompt,
-        self.maxTokens = maxTokens,
-        self.codeModelMode = codeModelMode
     
+class ClaudeAI:
+    def __init__(self, query: str, system_prompt: str = None,
+                 role: str = "user",
+                 previewToken: bool = False,
+                 userSystemPrompt: bool = False,
+                 maxTokens: int = 1024,
+                 codeModelMode: bool = False,
+                 memory_file: str = None
+                 ):
+        # Initialize memory based on memory file
+        self.memory_file = memory_file
+        self.memory = self.load_memory() if memory_file else []
+
         
+        if memory_file:
+            self.save_memory(query)
+
+        # Log memory for debugging
+        # logger.__INFO__(self.memory)
+
+        
+        system_prompt = f"This is your memory don't mention it in chat just use it as a reference {self.memory}"
+        
+        self.headers = get_claude_headers()
+        self.payload = get_claude_payload(f"{query}, {system_prompt}")
+        self.session = None
+
+        
+        self.role = role
+        self.previewToken = previewToken
+        self.userSystemPrompt = True  
+        self.maxTokens = maxTokens
+        self.codeModelMode = codeModelMode
 
     async def __aenter__(self):
         self.session = aiohttp.ClientSession()
@@ -167,7 +177,7 @@ class ClaudeAI:
         if self.session:
             await self.session.close()
 
-    async def get_response(self,system_prompt:str = None):
+    async def get_response(self, system_prompt: str = None):
         if not self.session:
             raise RuntimeError("Client session not initialized. Use async context manager.")
         
@@ -178,6 +188,11 @@ class ClaudeAI:
                     return ""
                 
                 response_text = await response.text()
+                
+                # Save response to memory file if specified
+                if self.memory_file:
+                    self.save_memory(response_text)
+                
                 return response_text
         
         except aiohttp.ClientError as client_error:
@@ -186,6 +201,26 @@ class ClaudeAI:
         except Exception as unexpected_error:
             print(f"Unexpected error during request: {unexpected_error}")
             return ""
+
+    def load_memory(self):
+        """Load previous interactions from a JSON file."""
+        try:
+            if self.memory_file and os.path.exists(self.memory_file):
+                with open(self.memory_file, 'r') as f:
+                    return json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Error loading memory file: {e}")
+        return []
+
+    def save_memory(self, query):
+        """Save the current query to the JSON file."""
+        if self.memory_file:
+            try:
+                self.memory.append(query)
+                with open(self.memory_file, 'w') as f:
+                    json.dump(self.memory, f, indent=2)
+            except IOError as e:
+                print(f"Error saving memory file: {e}")
 
 
 

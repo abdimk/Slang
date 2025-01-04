@@ -8,33 +8,15 @@ from slang.api import AskChat,Chatx,NextChat,Morphic
 from slang.api import Llama,QwenCoder
 from slang.api import ClaudeAI
 from slang.api import ChatLlama
+from scripts.execute import execute_command
 
 M = model_type.DuckModelType
+Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
-async def typeeffect(text: str, delay: float = 0.04):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        
-        await asyncio.sleep(delay)
-    
-    sys.stdout.write("\n")
-
-
-# trying to remove the ** starts that look a annoying as hell
-def remove_markdown_formatting(text: str) -> str:
-    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text) 
-    text = re.sub(r'\*(.*?)\*', r'\1', text)   
-
-    return text
-
-
-# async def main():
-#     async with ChatLlama("What is a tesseract", Llama_Models.Meta_Llama_3_2_3B_Instruct.value) as lm1:
-#         response = await lm1.get_response()
-#         print(response)
-
-
+async def main():
+    async with ChatLlama("what is your model",Lm) as lm1:
+        response = await lm1.get_response()
+        print(response)
 
 # async def main():
 #     async with Morphic("") as l1:
@@ -42,13 +24,10 @@ def remove_markdown_formatting(text: str) -> str:
 #         await typeeffect(response,0.0001)
 
 
-
 # async def main():
-#     async with ClaudeAI("what is your model") as l1:
+#     async with ClaudeAI("what is my name")as l1:
 #         response = await l1.get_response()
 #         print(response)
-
-
 
 # #Llama QewnCoder parameters 
 # async def main():
