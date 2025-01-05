@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     description = f.read()
 setup(
     name="slang",
-    version='1.1',
+    version='1.0.0',
     packages=find_packages(),
     install_requires=[
         'aiohappyeyeballs>=2.4.4',

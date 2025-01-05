@@ -22,7 +22,7 @@ python3 -m venv myenv && source myenv/bin/activate
 
 ### Clone the repository and install the build
 ```bash
-git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.1-py3-none-any.whl 
+git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0.0-py3-none-any.whl 
 ```
 
 <h2>or</h2>
