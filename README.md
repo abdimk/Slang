@@ -10,7 +10,7 @@
 
 
 - This is in the early stages, so you might experience some issues.
-- This is not for commercial use and barely works!
+- This is not for commercial use !
 - A lot of refactoring is still expected as this is part of my final year project.
 
 <h2>Installation</h2>
@@ -22,7 +22,7 @@ python3 -m venv myenv && source myenv/bin/activate
 
 ### Clone the repository and install the build
 ```bash
-git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0-py3-none-any.whl 
+git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.1-py3-none-any.whl 
 ```
 
 <h2>or</h2>
@@ -96,7 +96,7 @@ async def LlamaBig()->None:
 
 
 if __name__ =="__main__":
-    asyncio.run(Lamalight())
+    asyncio.run(Llamalight())
     asyncio.run(LlamaBig())
 
 ```
