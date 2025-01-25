@@ -2,7 +2,7 @@
     <h1 align="center"> Slang <img src="slang/assets/elmo-logo.png" width="60px" height="60px"></h1> 
 </div>
 
-<p align="center"><em>A simple LLM Wrapper/CLI</em></p>
+<p align="center"><em>A simple LLM collection for development/CLI</em></p>
 <!-- <p align="center"> </p> -->
 
 ## About
@@ -22,7 +22,7 @@ python3 -m venv myenv && source myenv/bin/activate
 
 ### Clone the repository and install the build
 ```bash
-git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0.0-py3-none-any.whl 
+git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0.1-py3-none-any.whl 
 ```
 
 <h2>or</h2>

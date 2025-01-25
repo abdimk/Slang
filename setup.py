@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     description = f.read()
 setup(
     name="slang",
-    version='1.0.0',
+    version='1.0.1',
     packages=find_packages(),
     install_requires=[
         'aiohappyeyeballs>=2.4.4',
@@ -43,3 +43,9 @@ setup(
 
 #long_description=description
 #long_description_content_type="text/markdown"
+
+
+
+# build command 
+# python setup.py sdist bdist_wheel
+# pip install dist/slang...

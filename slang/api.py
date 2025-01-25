@@ -136,6 +136,7 @@ class DuckChat:
                 "Sec-Fetch-Mode": "cors",
                 "Sec-Fetch-Site": "same-origin",
                 "TE": "trailers",
+                "x-vqd-4": "requested_x_vqd_4"
             }
         )
 

@@ -13,10 +13,13 @@ from scripts.typeffect import typeeffect
 M = model_type.DuckModelType
 Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
-async def Llamalight():
-    async with ChatLlama("what is your model",Lm) as lm1:
-        response = await lm1.get_response()
-        print(response)
+
+
+
+# async def Llamalight():
+#     async with ChatLlama("what is your model",Lm) as lm1:
+#         response = await lm1.get_response()
+#         print(response)
 
 
 
@@ -56,13 +59,12 @@ async def Llamalight():
 
 
 
-# query = "what is your model"
 # async def main() -> str:
-#     async with DuckChat(M.Claude) as d1:
-#         response = await d1.ask_question(query)
+#     async with DuckChat(M.GPT4o_Mini) as d1:
+#         response = await d1.ask_question("what is your model")
 #         print(response)
-#         # response = remove_markdown_formatting(response)
-#         # await typeeffect(response,0.02)
+        # response = remove_markdown_formatting(response)
+        # await typeeffect(response,0.02)
 
 
 
@@ -91,7 +93,7 @@ async def Llamalight():
 #     #translated = Lesan(answer).translate("am")
 #     await typeeffect(answer, 0.02)
 
-    
 
-if __name__ == "__main__":
-    asyncio.run(Llamalight())
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
