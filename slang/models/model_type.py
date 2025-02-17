@@ -6,6 +6,7 @@ class DuckModelType(Enum):
     Claude = "claude-3-haiku-20240307"
     Llama3o1 = "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
     Mixtral = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    o3Mini = "o3-mini"
 
 class DefaultModels(Enum):
     GPT4o_Full = "gpt-4o",

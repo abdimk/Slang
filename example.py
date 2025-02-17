@@ -24,47 +24,41 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
 
 # async def main():
-#     async with Morphic("") as l1:
-#         response = await l1.get_response()
+#     async with Morphic("what do you know about clerk authentication") as l1:
+#         response = await l1.make_request()
 #         await typeeffect(response,0.0001)
 
 
-# async def main()->str:
+# async def main()->str: [Need to sign in to access the service]
 #     async with ClaudeAI("Define a tesseract")as l1:
 #         response = await l1.get_response()
 #         await typeeffect(response)
 
-# #Llama QewnCoder parameters 
+
+
+#Llama QewnCoder parameters [Service has been deprecated]
 # async def main():
 #     async with QwenCoder("write a simple hello world in go") as l1:
 #         response = await l1.get_response()
 #         await typeeffect(response,0.03)
 
 
-#Llama 405B parameters 
+
+# Llama 405B parameters [Service has been deprecated]
 # async def main():
 #     async with Llama("john the ripper") as l1:
 #         response = await l1.get_response()
 #         print(response)
-        # await typeeffect(response,0.03)
+#         await typeeffect(response,0.03)
 
 
-
-
-# async def main():
-#     async with Morphic("john the ripper") as m1:
-#         response = await m1.make_request()
-#         print(response)
-        # await typeeffect(response,0.03)
 
 
 
 # async def main() -> str:
-#     async with DuckChat(M.GPT4o_Mini) as d1:
+#     async with DuckChat(M.o3Mini) as d1:
 #         response = await d1.ask_question("what is your model")
-#         print(response)
-        # response = remove_markdown_formatting(response)
-        # await typeeffect(response,0.02)
+#         await typeeffect(response,0.02)
 
 
 
@@ -74,13 +68,13 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #     answer = await chat_instance.get_answer()
 #     print(answer)
     
+
 # query = "what is your model"
 # async def main()->str:
 #    chat_instance = NextChat(query)
 #    answer = await chat_instance.fetch_chat()
 #    print(answer)
-   #translated = Lesan(answer).translate("am")
-#    await typeeffect(answer, 0.02)
+   
 
 
 
@@ -96,4 +90,5 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
 
 # if __name__ == "__main__":
-#     asyncio.run(main())
+#     asyncio.run(Llamalight())
+

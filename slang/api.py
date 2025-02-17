@@ -9,9 +9,6 @@ import msgspec
 from types import TracebackType
 from typing import AsyncGenerator, Self
 from fake_useragent import UserAgent
-# from slangexceptions import (ConversationLimitException,
-#                               DuckChatException,
-#                               RatelimitException)
 from slang.exceptions import(
     ConversationLimitException,
     DuckChatException,
