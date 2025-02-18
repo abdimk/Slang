@@ -105,42 +105,11 @@ def about(all: Optional[bool] = typer.Option(False, "-all", help="Shows details 
             border_style="blue"
         ))
             
-@app.command()
-def claude(
-    query: str = typer.Option(..., "-c", "--command", help="The query to send to ClaudeAI")
-) -> None:
-    """
-    Send a query to ClaudeAI and display the response with Markdown formatting.
-    """
-    async def run_query():
-        try:
-            with console.status("[bold white] Claude3.5 Sonnet[/bold white]", spinner="dots"):
-                async with ClaudeAI(query) as l1:
-                    response = await l1.get_response()
-            
-            markdown_content = Markdown(response)
-            panel = Panel(
-                markdown_content,
-                title="Claude3.5 Response",
-                border_style="green",
-                expand=True
-            )
-            console.print(panel)
-        
-        except Exception as e:
-            error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
-                title="Error",
-                border_style="red",
-                expand=False
-            )
-            console.print(error_panel)
 
-    
-    asyncio.run(run_query())
+
 
 @app.command()
-def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to send to ClaudeAI")) -> None:
+def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to send to Morphic")) -> None:
     """
     Send a query to Morphic search engine 
     """
@@ -172,42 +141,74 @@ def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to 
     
     asyncio.run(run_query())
 
-
-
 @app.command()
-def qwen(query: str = typer.Option(..., "-c", "--command",help="The query to send to QwenCoderAI")) -> None:
+def claude(query:str = typer.Option(..., "-c", "--command", help="Make a request to claude 3 Haiku from duck duck model")) -> None:
+    model = M.Claude
     """
-    Send a query to QwenCoder with 2.1B parameters
+    Send a query to Claude 3 Haiku
     """
-
     async def run_query():
-        try:
-            with console.status("[bold white] QwenCoder[/bold white]", spinner="dots"):
-                async with QwenCoder(query) as q1:
-                    response = await q1.get_response()
+        try: 
+            with console.status(f"[bold white] {model.value}[/bold white]", spinner="dots"):
+                async with DuckChat(model) as d1:
+                    response = await d1.ask_question(query)
 
-                markdown_content = Markdown(response)
-                panel = Panel(
-                    markdown_content,
-                    title="QwenCoder",
-                    border_style="red",
-                    expand=True
-                )
 
-                console.print(panel)
+                    markdown_content = Markdown(response)
+                    panel = Panel(
+                        markdown_content,
+                        title=f"{model.value}",
+                        border_style="red",
+                        expand=True
+                    )
+                    console.print(panel)
+
         except Exception as e:
             error_panel = Panel(
-                Text(f"Error: {str(e)}", style="bold red"),
+                Text(f"Error: {str(e)}",style="bold red"),
                 title="Error",
                 border_style="red",
                 expand=False
             )
+            
             console.print(error_panel)
 
-    
     asyncio.run(run_query())
 
 
+@app.command()
+def o3mini(query:str = typer.Option(..., "-c", "--command", help="Make a request to o3 Mini from duck duck model")) -> None:
+    model = M.o3Mini
+    """
+    Send a query to o3 Mini
+    """
+    async def run_query():
+        try: 
+            with console.status(f"[bold white] {model.value}[/bold white]", spinner="dots"):
+                async with DuckChat(model) as d1:
+                    response = await d1.ask_question(query)
+
+
+                    markdown_content = Markdown(response)
+                    panel = Panel(
+                        markdown_content,
+                        title=f"{model.value}",
+                        border_style="red",
+                        expand=True
+                    )
+                    console.print(panel)
+
+        except Exception as e:
+            error_panel = Panel(
+                Text(f"Error: {str(e)}",style="bold red"),
+                title="Error",
+                border_style="red",
+                expand=False
+            )
+            
+            console.print(error_panel)
+
+    asyncio.run(run_query())
 
 @app.command()
 def llama(query: str = typer.Option(..., "-c", "--command",help="The query to send to Llama Light"),

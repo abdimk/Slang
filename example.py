@@ -15,7 +15,6 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
 
 
-
 # async def Llamalight():
 #     async with ChatLlama("what is your model",Lm) as lm1:
 #         response = await lm1.get_response()
@@ -53,13 +52,10 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 
 
 
-
-
 # async def main() -> str:
 #     async with DuckChat(M.o3Mini) as d1:
 #         response = await d1.ask_question("what is your model")
 #         await typeeffect(response,0.02)
-
 
 
 # query = "what is your model"
@@ -75,7 +71,6 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #    answer = await chat_instance.fetch_chat()
 #    print(answer)
    
-
 
 
 #Chat X
