@@ -29,7 +29,7 @@ app = typer.Typer()
 def main() -> None:
     """Default command."""
     try:
-        message = Text("Slang CLI: https://github.com/abdimk/Slang", style="bold green")
+        message = Text("Slang CLI: https://github.com/abdimk/Slang\n Abdisa Merga 2024", style="bold green")
         panel = Panel(message, title="Welcome", subtitle="Powered by Rich CLI", expand=False)
         console.print(panel)
     
@@ -67,7 +67,7 @@ def about(all: Optional[bool] = typer.Option(False, "-all", help="Shows details 
     table.add_column("Status", style="bold")
 
     table.add_row(
-        "Claude 3.5 Sonnet", 
+        "Claude 3 Haiku", 
         "Advanced AI by Anthropic", 
         "Conversational, Code, Analysis", 
         "[green]Active[/green]"
@@ -79,8 +79,8 @@ def about(all: Optional[bool] = typer.Option(False, "-all", help="Shows details 
         "[green]Active[/green]"
     )
     table.add_row(
-        "Qwen", 
-        "Large Language Model by Alibaba", 
+        "o3Mini", 
+        "Large Language Model by Open AI", 
         "Multilingual, Coding", 
         "[green]Active[/green]"
     )
@@ -143,10 +143,10 @@ def morphic(query: str = typer.Option(..., "-c", "--command",help="The query to 
 
 @app.command()
 def claude(query:str = typer.Option(..., "-c", "--command", help="Make a request to claude 3 Haiku from duck duck model")) -> None:
-    model = M.Claude
     """
     Send a query to Claude 3 Haiku
     """
+    model = M.Claude
     async def run_query():
         try: 
             with console.status(f"[bold white] {model.value}[/bold white]", spinner="dots"):
@@ -178,10 +178,10 @@ def claude(query:str = typer.Option(..., "-c", "--command", help="Make a request
 
 @app.command()
 def o3mini(query:str = typer.Option(..., "-c", "--command", help="Make a request to o3 Mini from duck duck model")) -> None:
-    model = M.o3Mini
     """
     Send a query to o3 Mini
     """
+    model = M.o3Mini
     async def run_query():
         try: 
             with console.status(f"[bold white] {model.value}[/bold white]", spinner="dots"):
