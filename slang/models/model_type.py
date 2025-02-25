@@ -19,6 +19,11 @@ class LlamaModels(Enum):
     Meta_Llama_3_2_1_70B_Instruct = "Meta-Llama-3.1-70B-Instruct"
 
 
+class DeepSeek(Enum):
+    Deep_Seek_R1 = "deepseek-ai/DeepSeek-R1"
+    Deep_Seek_v3 = "deepseek-ai/DeepSeek-v3"
+    Deep_Seek_Distill_Llama_70B = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+
 
 
 

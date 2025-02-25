@@ -51,11 +51,10 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #         await typeeffect(response,0.03)
 
 
-
-async def main() -> str:
-    async with DuckChat(M.o3Mini) as d1:
-        response = await d1.ask_question("what is your model")
-        await typeeffect(response,0.02)
+# async def main() -> str:
+#     async with DuckChat(M.o3Mini) as d1:
+#         response = await d1.ask_question("what is your model")
+#         await typeeffect(response,0.02)
 
 
 # query = "what is your model"
@@ -83,7 +82,19 @@ async def main() -> str:
 #     await typeeffect(answer, 0.02)
 
 
+# from slang.deepseek import DeepSeek
+# from slang.models import model_type
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+# deepSeekR1 = model_type.DeepSeek.Deep_Seek_R1.value
+
+
+# async def main():
+#     async with DeepSeek("write a simple unit test in go for post request",deepSeekR1) as m:
+#         await m.get_response()
+
+
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
