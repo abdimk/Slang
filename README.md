@@ -19,7 +19,6 @@
 ## Requirements
 
 - Python 3.6 or higher
-- Internet connection for downloading dependencies
 
 ## Getting Started
 
@@ -52,7 +51,7 @@ Ensure you have Python 3.6 or higher installed. You can download it from [python
 
 To use the LLM:
 ```bash
-[claude,morphic,qwen]
+[GPT4,Claude3,Morphic,Llama,O3Mini]
 python -m claude -c "prompt"
 ```
 
@@ -64,18 +63,20 @@ python -m claude -c "prompt" -m "8B"
 
 ### Python Package Usage
 
-#### Using ClaudeAI
+#### Using ClaudeAI From DuckDuckChat
 
 ```python
 import asyncio
 from slang.api import ClaudeAI
 from scripts.typeffect import typeeffect
 
-async def main() -> None:
-    async with ClaudeAI("prompt", system_prompt="", maxTokens=1024) as cld:
-        response = await cld.get_response()
-        print(response)
-        await typeeffect(response)
+M = model_type.DuckModelType
+
+async def main() -> str:
+    async with DuckChat(M.Claude) as d1:
+        response = await d1.ask_question("Tell me a fun fact about the moon")
+        await typeeffect(response,0.02)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
