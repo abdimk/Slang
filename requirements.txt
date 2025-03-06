@@ -82,7 +82,6 @@ rich-toolkit==0.13.2
 SecretStorage==3.3.3
 setuptools==75.6.0
 shellingham==1.5.4
-slang @ file:///home/abdisa/Desktop/Tesseract/New%20Folder/slang/dist/slang-1.0.3-py3-none-any.whl#sha256=326f604a812ea03f788fc69d24dc9e28fa945c5de65547f9c4ae3dbaa2c02503
 sniffio==1.3.1
 SQLAlchemy==2.0.37
 starlette==0.41.3
