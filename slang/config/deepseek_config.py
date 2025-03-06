@@ -14,7 +14,7 @@ def DeepSeek_Payload(query:str, model:str)->None:
             {"role": "user", "content": query}
         ],
         "frequency_penalty": 0,
-        "max_tokens": 800,
+        "max_tokens": None,
         "stream": True,
         "temperature": 0.7,
         "min_p": 0,

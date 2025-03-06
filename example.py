@@ -50,11 +50,20 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #         print(response)
 #         await typeeffect(response,0.03)
 
+# from langchain_experimental.tools import PythonREPLTool
+# code_exec_tool = PythonREPLTool()
+
+
 
 # async def main() -> str:
 #     async with DuckChat(M.o3Mini) as d1:
-#         response = await d1.ask_question("what is your model")
+#         response = await d1.ask_question("Write a Python function to calculate the factorial of a number OUTPUT ONLY THE CODE")
+#         result = code_exec_tool.run(response)
+#         exec(result)
 #         await typeeffect(response,0.02)
+
+#         factorial_result = eval("factorial(5)") 
+#         print(factorial_result)
 
 
 # query = "what is your model"
@@ -82,23 +91,22 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #     await typeeffect(answer, 0.02)
 
 
-from slang.deepseek import DeepSeek
-from slang.models import model_type
+# from slang.deepseek import DeepSeek
+# from slang.models import model_type
 
 
 
 
 
+# deepseekR1 = model_type.DeepSeek.Deep_Seek_R1.value
 
-deepSeekR1 = model_type.DeepSeek.Deep_Seek_R1.value
-
-
-async def main():
-    async with DeepSeek("write a simple unit test in go for post request",deepSeekR1) as m:
-        await m.get_response()
-
+# # query = input("write your prompt:")
+# async def main():
+#     async with DeepSeek(f"{query}",deepseekR1) as m:
+#         await m.get_response()
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
