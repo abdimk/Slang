@@ -224,7 +224,9 @@ def llama(query: str = typer.Option(..., "-c", "--command",help="The query to se
         "1B": lm.Meta_Llama_3_2_1B_Instruct.value,
         "3B": lm.Meta_Llama_3_2_3B_Instruct.value,
         "8B": lm.Meta_Llama_3_2_1_8B_Instruct.value,
-        "70B": lm.Meta_Llama_3_2_1_70B_Instruct.value
+        "70B": lm.Meta_Llama_3_2_1_70B_Instruct.value,
+        "405B": lm.Meta_Llama_3_2_1_405B_Instruct.value,
+        "gpt4":lm.GPT4o.value
     }
 
 

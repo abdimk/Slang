@@ -35,7 +35,7 @@ Ensure you have Python 3.6 or higher installed. You can download it from [python
 
 2. **Clone the repository and install the build**:
     ```bash
-    git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0.3-py3-none-any.whl 
+    git clone https://github.com/abdimk/Slang && cd Slang && pip install dist/slang-1.0.4-py3-none-any.whl 
     ```
 
     **or**
@@ -57,7 +57,7 @@ python -m claude -c "prompt"
 
 For Llama, specify the parameters:
 ```bash
-[1B, 3B, 8B, 70B]
+[1B, 3B, 8B, 70B, 405B]
 python -m claude -c "prompt" -m "8B"
 ```
 
