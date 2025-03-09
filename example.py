@@ -91,22 +91,22 @@ Lm = Llama_Models.Meta_Llama_3_2_1_70B_Instruct.value
 #     await typeeffect(answer, 0.02)
 
 
-# from slang.deepseek import DeepSeek
-# from slang.models import model_type
+from slang.deepseek import DeepSeek
+from slang.models import model_type
+
+
+print("started")
+
+
+deepseekR1 = model_type.DeepSeek.Deep_Seek_R1.value
+
+query = input("write your prompt:")
+async def main():
+    async with DeepSeek(f"{query}",deepseekR1) as m:
+        await m.get_response()
 
 
 
-
-
-# deepseekR1 = model_type.DeepSeek.Deep_Seek_R1.value
-
-# # query = input("write your prompt:")
-# async def main():
-#     async with DeepSeek(f"{query}",deepseekR1) as m:
-#         await m.get_response()
-
-
-
-# if __name__ == "__main__":
-#     asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
 

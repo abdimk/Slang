@@ -46,7 +46,7 @@ class DeepSeek:
                                 content = data["choices"][0]["delta"].get("content", "")
 
                                 if content.strip().startswith("```"):
-                                    sys.stdout.writeline("\n")
+                                    sys.stdout.writelines("\n")
                                     sys.stdout.flush()
                                     sys.stdout.write(content)
                                     sys.stdout.write("\n")
