@@ -21,38 +21,38 @@ app = FastAPI()
 
 # simple gemini pro
 # This function sends a request to Gemini, extracts, and returns the text content.
-async def send_request_togemini(query: str, sp: str) -> str:
-    url = (
-        "https://generativelanguage.googleapis.com/v1beta/models/"
-        "gemini-2.0-flash:generateContent?key=AIzaSyD0THDIxQLdYpvz07ht12I13OgtHFrkL8k"
-    )
-    headers = {"Content-Type": "application/json"}
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": query}
-                ]
-            }
-        ]
-    }
+# async def send_request_togemini(query: str, sp: str) -> str:
+#     url = (
+#         "https://generativelanguage.googleapis.com/v1beta/models/"
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=payload) as response:
-            if response.status == 200:
-                json_response = await response.json()
-                candidates = json_response.get("candidates", [])
-                # Return the first candidate's text, if available.
-                for candidate in candidates:
-                    content = candidate.get("content", {})
-                    parts = content.get("parts", [])
-                    for part in parts:
-                        text = part.get("text", "")
-                        return text
-                return "No content found in response."
-            else:
-                text_response = await response.text()
-                return f"Error {response.status}: {text_response}"
+#     )
+#     headers = {"Content-Type": "application/json"}
+#     payload = {
+#         "contents": [
+#             {
+#                 "parts": [
+#                     {"text": query}
+#                 ]
+#             }
+#         ]
+#     }
+
+#     async with aiohttp.ClientSession() as session:
+#         async with session.post(url, headers=headers, json=payload) as response:
+#             if response.status == 200:
+#                 json_response = await response.json()
+#                 candidates = json_response.get("candidates", [])
+#                 # Return the first candidate's text, if available.
+#                 for candidate in candidates:
+#                     content = candidate.get("content", {})
+#                     parts = content.get("parts", [])
+#                     for part in parts:
+#                         text = part.get("text", "")
+#                         return text
+#                 return "No content found in response."
+#             else:
+#                 text_response = await response.text()
+#                 return f"Error {response.status}: {text_response}"
 
 @app.get("/")
 async def index():
